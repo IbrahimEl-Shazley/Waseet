@@ -1,0 +1,139 @@
+﻿@model IEnumerable<Wasit.Services.ViewModels.Advertisments.AdvertismentViewModel>
+@{
+    ViewData["Title"] = "الاعلانات";
+}
+
+
+<div class="d-flex justify-content-end mb-3">
+    <button class="main-btn" data-bs-toggle="modal" data-bs-target="#add-advertisement">اضافة اعلان</button>
+</div>
+<div class="row addvertisements">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-6 col-sm-12">
+            <div class="addvertisement">
+                <img src="@item.Image" alt="">
+                <div class="remove-add" data-bs-toggle="modal" data-bs-target="#delete" onclick="PassId('@item.Id')">
+                    <i class="fa-regular fa-trash-can remove"></i>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- add advertisement modal -->
+<div class="modal fade" id="add-advertisement" tabindex="-1" aria-labelledby="add-advertisementLabel" data-bs-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-b" id="add-advertisementLabel">اضافة اعلان</h5>
+                <button type="button" class="btn-close ms-0 me-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="font-b font-sm mb-3">صورة الاعلان</p>
+                <div id="fileUpload" class="file-container">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="SendImage(this)" class="secondary-btn w-100 py-3">ارسال</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end add advertisement modal -->
+<!--delete Modal Start -->
+<div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b" id="filterLabel">حذف الاعلان</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="font-xs">هل تريد حذف الاعلان</p>
+            </div>
+            <div class="modal-footer">
+                <span hidden></span>
+                <button type="button" class="secondary-btn w-100 py-3" onclick="Remove(this)">تأكيد حذف الاعلان</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--delete modal End-->
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $("#fileUpload").fileUpload();
+            });
+        });
+
+        function PassId(id) {
+            $('#delete span').text(id);
+        }
+
+
+        function SendImage(btn) {
+            debugger;
+            $(btn).attr('disabled', true);
+            var image = $("input#fileUpload-1")[0].files[0];
+
+            if (image == undefined) {
+                toastr.error('يجب عليك اختيار صورة');
+                $(btn).attr('disabled', false);
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append('Image', image);
+
+            $.ajax({
+                url: "/Advertisments/Create",
+                type: "POST",
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (response) {
+                    debugger;
+                    if (response.success) {
+                        // If success is true, do something with the success message
+                        toastr.success('تم اضافة الاعلان بنجاح');
+                        setInterval(function () { window.location.href = "/Advertisments/Index" }, 2000);
+                    } else {
+                        toastr.error(response.message);
+                        // setInterval(function () { window.location.href = "/Advertisments/Index" }, 2000);
+                    }
+                
+                    // toastr.success('تم اضافة الاعلان بنجاح');
+                    // setInterval(function () { window.location.href = "/Advertisments/Index" }, 2000);
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                }
+            });
+        }
+
+        function Remove(btn) {
+            $(btn).attr('disabled', true);
+            var id = $(btn).siblings('span').text();
+            $("#delete").modal('hide');
+            $.ajax({
+                url: "/Advertisments/Remove",
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (result) {  
+                    toastr.success('تم حذف الاعلان بنجاح');
+                    setInterval(function () { window.location.href = "/Advertisments/Index" }, 2000);
+                },
+                failure: function (info) {
+                    $(btn).attr('disabled', false);
+                    toastr.error('حدث خطأ ما');
+                }
+            });
+        }
+    </script>
+}

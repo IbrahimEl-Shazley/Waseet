@@ -1,0 +1,228 @@
+﻿@using Wasit.Services.ViewModels.Shared
+@model IEnumerable<Wasit.Services.ViewModels.Estates.EstateViewModel>
+
+@{
+    ViewData["Title"] = "بيانات العقارات الخاصة بي";
+    ViewData["keyword"] = "MyEstates";
+}
+
+<div class="add d-flex justify-content-end">
+    <a class="main-btn w-auto" asp-action="SelectCategory">اضافة عقار</a>
+</div>
+<div class="filter-nav d-flex justify-content-center flex-row list-group">
+    <button class="list-group-item active1 active" onclick="LoadTypes(this , 'active1')" value="@CategoryType.Sale">بيع</button>
+    <button class="list-group-item active2" onclick="LoadTypes(this , 'active2')" value="@CategoryType.Rent">ايجار</button>
+    <button class="list-group-item active3" onclick="LoadTypes(this , 'active3')" value="@CategoryType.DailyRent">ايجار يومى</button>
+    <button class="list-group-item active4" onclick="LoadTypes(this , 'active4')" value="@CategoryType.Entertainment">ترفيهى</button>
+</div>
+<div class="nav-filter py-3">
+    <span hidden></span>
+    <ul class="nav scroll-nav">
+        @foreach (var item in ViewBag.Types as List<SharedViewModel>)
+        {
+            @* <li class="li-active nav-item"> *@
+            <li class="nav-item">
+                <a onclick="Filter(@item.Id)" class="nav-link" style="cursor:pointer">@item.Name</a>
+            </li>
+        }
+    </ul>
+</div>
+<dibutton>
+    <table id="" class="data-table responsive nowrap" width="100%">
+        <thead>
+            <tr class="table-head">
+                <th class="text-center p-3">اسم العقار</th>
+                <th class="text-center">الرقم المرجعى</th>
+                <th class="text-center">السعر</th>
+                <th class="text-center">المدينة</th>
+                <th class="text-center">الحى</th>
+                <th class="text-center">ظهور</th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="table-row">
+                    <td>@item.Name</td>
+                    <td>@item.UniqueNumber</td>
+                    <td>@item.Price</td>
+                    <td>@item.City</td>
+                    <td>@item.Region</td>
+                    <td>
+                        <div class="form-check form-switch  notifi-switch d-flex justify-content-center">
+                            @if (item.IsVisible)
+                            {
+                                <input onchange="ChangeActivation('@item.Id')" class="form-check-input" type="checkbox" checked>
+                            }
+                            else
+                            {
+                                <input onchange="ChangeActivation('@item.Id')" class="form-check-input" type="checkbox">
+                            }
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="d-flex gap-3 justify-content-center">
+                            <a onclick="NavigateToDetails('@item.Id')" class="sent-btn">التفاصيل</a>
+                            <span hidden>@item.Id</span>
+                            <a href="/Estates" class="edit-btn">تعديل</a>
+                            <button class="delete-btn" data-bs-toggle="modal" data-bs-target="#delete" onclick="PassId('@item.Id')">حذف</button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</dibutton>
+
+
+<!--filter Modal Start -->
+<div class="modal fade" id="filter" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b" id="filterLabel">فلتر البحث</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="semester" class="my-2 font-b">حالة العقار</label>
+                <select name="city[]" id="semester" class="select2">
+                    <option disabled selected class="gray">اختر حالة العقار</option>
+                    <option selected hidden>اختر نوع الخدمة</option>
+                    <option value="1">شراء</option>
+                    <option value="2">ايجار طويل الامد</option>
+                    <option value="3">ترفيهي</option>
+                    <option value="4">ايجار يومي</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="secondary-btn w-100 py-3">بحث</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--filter modal End-->
+<!--delete Modal Start -->
+<div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b" id="filterLabel">حذف العقار</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="font-xs">هل تريد حذف هذا العقار</p>
+            </div>
+            <div class="modal-footer">
+                <span hidden></span>
+                <button type="button" class="secondary-btn w-100 py-3" onclick="Remove(this)">تأكيد حذف العقار</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--delete modal End-->
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.edit-btn').each(function () {
+                var actionName = "";
+                var id = $(this).siblings('span').text();
+                if (ReturnCurrentCategory() == "Sale"){
+                    actionName = "/UpdateSaleEstate";
+                }
+                if (ReturnCurrentCategory() == "DailyRent") {
+                    actionName = "/UpdateDailyRentEstate";
+                }
+                if (ReturnCurrentCategory() == "Rent"){
+                    actionName = "/UpdateRentEstate";
+                }
+                if (ReturnCurrentCategory() == "Entertainment") {
+                    actionName = "/UpdateEntertainmentRentEstate";
+                }
+                $(this).attr("href", $(this).attr("href") + actionName + "?id=" + id + "&category=" + ReturnCurrentCategory());
+            });
+        });
+
+
+        function LoadTypes(btn , active) { 
+            localStorage.setItem("stateActiveTab", active);
+                
+            var category = $(btn).val()
+            window.location.assign(window.location.origin + `/Estates/MyEstates?category=${category}&type=${0}`);
+        }
+        $("." + localStorage.getItem("stateActiveTab")).addClass("active").siblings().removeClass('active')
+
+        function Filter(typeId) {
+            var category = ReturnCurrentCategory();
+            window.location.assign(window.location.origin + `/Estates/MyEstates?category=${category}&type=${typeId}`);
+        }
+
+        function ReturnCurrentCategory() {
+            if (window.location.href.includes("Sale")) {
+                return "Sale";
+            }
+            if (window.location.href.includes("DailyRent")) {
+                return "DailyRent";
+            }
+            if (window.location.href.includes("Rent")) {
+                return "Rent";
+            }
+            if (window.location.href.includes("Entertainment")) {
+                return "Entertainment";
+            }
+        }
+
+        function PassId(id) {
+            $('#delete span').text(id);
+        }
+
+        function ChangeActivation(id) {
+            var category = ReturnCurrentCategory();
+            $.ajax({
+                url: "/Estates/ChangeVisibility",
+                type: "PUT",
+                dataType: "json",
+                data: {
+                    id: id,
+                    category: category
+                },
+                success: function (result) {
+
+                },
+                failure: function (info) {
+
+                }
+            });
+        }
+
+        function Remove(btn) {
+            $(btn).attr('disabled', true);
+            var id = $(btn).siblings('span').text();
+            var category = ReturnCurrentCategory();
+            $("#delete").modal('hide');
+            $.ajax({
+                url: "/Estates/Remove",
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    id: id,
+                    category: category
+                },
+                success: function (result) {
+                    toastr.success('تم حذف العقار بنجاح');
+                    setInterval(function () { window.location.href = "/Estates/MyEstates" }, 2000);
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                }
+            });
+        }
+
+
+        function NavigateToDetails(id) {
+            var category = ReturnCurrentCategory();
+            window.location.assign(window.location.origin + `/Estates/MyEstateDetails?id=${id}&category=${category}`);
+        }
+
+    </script>
+}

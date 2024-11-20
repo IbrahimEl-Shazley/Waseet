@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Wasit.Services.ViewModels.PropertyManagement.MaintainanceMangement.MaintainanceManagementRequestViewModel>
+@{
+    ViewData["Title"] = "طلبات الصيانة";
+}
+
+
+<div class="filter-nav d-flex justify-content-center flex-row list-group">
+    <button class="list-group-item active" id="pills-new-tab" data-bs-toggle="pill" data-bs-target="#new" type="button" value="1" role="tab">جديدة</button>
+    <button class="list-group-item" id="pills-current-tab" data-bs-toggle="pill" data-bs-target="#current" type="button" value="2" role="tab">حالية</button>
+    <button class="list-group-item" id="pills-finished-tab" data-bs-toggle="pill" data-bs-target="#finished" type="button" value="3" role="tab">منتهية</button>
+</div>
+<div class="tab-content" id="pills-tabContent">
+
+    <div class="tab-pane fade show active" id="new" role="tabpanel">
+        <table id="" class="data-table responsive nowrap" width="100%">
+            <thead>
+                <tr class="table-head">
+                    <th class="text-center p-3">اسم العميل</th>
+                    <th class="text-center">رقم الجوال</th>
+                    <th class="text-center">تفاصيل العقار</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(x => x.Status == RentalManagementOrderStatus.New))
+                {
+                    <tr class="table-row">
+                        <td>@item.UserName</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.EstateName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-pane fade" id="current" role="tabpanel">
+        <table id="" class="data-table responsive nowrap" width="100%">
+            <thead>
+                <tr class="table-head">
+                    <th class="text-center p-3">اسم العميل</th>
+                    <th class="text-center">رقم الجوال</th>
+                    <th class="text-center">تفاصيل العقار</th>
+                    <th class="text-center">اسم المندوب</th>
+                    <th class="text-center">جوال المندوب </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(x => x.Status == RentalManagementOrderStatus.Current))
+                {
+                    <tr class="table-row">
+                        <td>@item.UserName</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.EstateName</td>
+                        <td>@item.DelegateName</td>
+                        <td>@item.DelegatePhone</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-pane fade" id="finished" role="tabpanel">
+        <table id="" class="data-table responsive nowrap" width="100%">
+            <thead>
+                <tr class="table-head">
+                    <th class="text-center p-3">اسم العميل</th>
+                    <th class="text-center">رقم الجوال</th>
+                    <th class="text-center">تفاصيل العقار</th>
+                    <th class="text-center">اسم المندوب</th>
+                    <th class="text-center">جوال المندوب </th>
+                    <th class="text-center">تقييم العميل</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(x => x.Status == RentalManagementOrderStatus.Finished))
+                {
+                    <tr class="table-row">
+                        <td>@item.UserName</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.EstateName</td>
+                        <td>@item.DelegateName</td>
+                        <td>@item.DelegatePhone</td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <p class="font-xs m-0 mx-2"><span>@item.Rating</span>/5</p>
+                                <i class="fa-solid fa-star star"></i>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".dt-search input").attr("placeholder", `بحث باسم العميل - رقم الجوال -  تفاصيل العقار `);
+
+            // $('.data-table').DataTable({
+            //     responsive: {
+            //         details: {
+            //             renderer: DataTable.Responsive.renderer.listHiddenNodes()
+            //         },
+            //     },
+            //     pageLength: 6,
+            //     fixedHeader: {
+            //         header: false,
+            //     },
+            //     searching: false,
+            //     sort: false,
+            //     bInfo: false,
+            // });
+        });
+    </script>
+}

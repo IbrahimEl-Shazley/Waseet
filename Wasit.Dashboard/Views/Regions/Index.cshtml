@@ -1,0 +1,172 @@
+﻿@model Wasit.Services.ViewModels.Region.RegionViewModel
+
+@{
+    ViewData["Title"] = "الاحياء";
+}
+
+<div class="d-flex justify-content-end align-items-center mb-3">
+    <button class="main-btn" data-bs-toggle="modal" data-bs-target="#add-region">اضافة حى</i></button>
+</div>
+<table id="" class="data-table responsive nowrap" width="100%">
+    <thead>
+        <tr class="table-head">
+            <th class="text-center p-3">اسم الحي باللغة العربية</th>
+            <th class="text-center p-3">اسم الحي باللغة الانجليزية</th>
+            <th class="text-center">تاريخ الاضافة</th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var region in Model.Regions)
+        {
+            <tr class="table-row">
+                <td>@region.NameAr</td>
+                <td>@region.NameEn</td>
+                <td>@region.DateTime</td>
+                <td class="text-center">
+                    <div class="d-flex gap-3 justify-content-center">
+                        <a asp-action="Update" asp-route-id="@region.Id" class="edit-btn">تعديل</a>
+                        <button class="delete-btn" data-bs-toggle="modal" data-bs-target="#delete" onclick="PassId('@region.Id')">حذف الحي</button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<!-- add city modal start -->
+<div class="modal fade" id="add-region" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b" id="filterLabel">اضافة حي</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label for="NameAr" class="input-label">اسم الحي باللغة العربية</label>
+                    <input type="text" name="NameAr" id="NameAr" class="site-input mb-2" placeholder="اسم الحي باللغة العربية">
+                </div>
+                <div>
+                    <label for="NameEn" class="input-label">اسم الحي باللغة الانجليزية</label>
+                    <input type="text" name="NameEn" id="NameEn" class="site-input mb-2" placeholder="اسم الحي باللغة الانجليزية">
+                </div>
+                <div>
+                    <label for="CityId" class="input-label">المدينة</label>
+                    <select class="select2 service-select" name="CityId" id="CityId" asp-items="@ViewBag.Cities">
+                        <option selected hidden disabled>اختر مدينة</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="secondary-btn w-100 py-3" onclick="CreateRegion(this)">اضافة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- add city modal end -->
+
+
+<!--delete Modal Start -->
+<div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b" id="filterLabel">حذف الحي</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="font-xs">هل تريد حذف الحي ؟</p>
+            </div>
+            <div class="modal-footer">
+                <span hidden></span>
+                <button type="button" class="secondary-btn w-100 py-3" onclick="Remove(this)">تأكيد حذف الحي </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--delete modal End-->
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $(".dt-search input").attr("placeholder", `بحث باسم المنطقه - تاريخ الاضاقه -`);
+        });
+        function PassId(id) {
+            $('#delete span').text(id);
+        }
+
+        function Remove(btn) {
+            $(btn).attr('disabled', true);
+            var id = $(btn).siblings('span').text();
+            $("#delete").modal('hide');
+            $.ajax({
+                url: "/Regions/Remove",
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (response) {
+                    debugger;
+                    if (response.success) {
+                        toastr.success(response.message)
+                        setInterval(function () { window.location.href = "/Regions/Index" }, 2000);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                    $(btn).attr('disabled', false);
+
+                }
+            });
+        }
+
+
+        function CreateRegion(btn) {
+            debugger;
+            $(btn).attr('disabled', true);
+            var nameAr = $('input#NameAr').val();
+            var nameEn = $('input#NameEn').val();
+            var cityId = $('select#CityId').val();
+            if (nameAr.trim() == "") {
+                toastr.warning('الرجاء ادخال اسم الحي باللغة العربية');
+                $(btn).attr('disabled', false);
+                return;
+            }
+            if (nameEn.trim() == "") {
+                toastr.warning('الرجاء ادخال اسم الحي باللغة الانجليزية');
+                $(btn).attr('disabled', false);
+                return;
+            }
+            if (cityId == null) {
+                toastr.warning('الرجاء اختيار المدينة');
+                $(btn).attr('disabled', false);
+                return;
+            }
+            $("#add-region").modal('hide');
+            $.ajax({
+                url: "/Regions/Create",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    NameAr: nameAr,
+                    NameEn: nameEn,
+                    CityId: cityId
+                },
+                success: function (result) {
+                    toastr.success('تم اضافة الحي بنجاح');
+                    setInterval(function () { window.location.href = "/Regions/Index" }, 2000);
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                }
+            });
+        }
+    </script>
+}

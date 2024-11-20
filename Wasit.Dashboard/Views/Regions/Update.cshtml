@@ -1,0 +1,42 @@
+﻿@model Wasit.Services.ViewModels.Region.UpdateRegionViewModel
+
+@{
+    ViewData["Title"] = "تعديل حي";
+}
+
+<form class="add-state" id="myForm" asp-action="Update" method="post">
+    <p class="p-color font-small mb-4 font-gray title">الرجاء املئ البيانات التالية</p>
+
+    <div class="col-12 mb-4">
+        <label asp-for="NameAr" class="input-label">اسم الحي باللغة العربية</label>
+        <input asp-for="NameAr" value="@Model.NameAr" placeholder="اسم الحي باللغة العربية" class="site-input">
+        <span asp-validation-for="NameAr" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 mb-4">
+        <label asp-for="NameEn" class="input-label">اسم الحي باللغة الانجليزية</label>
+        <input asp-for="NameEn" value="@Model.NameEn" placeholder="اسم الحي باللغة الانجليزية" class="site-input">
+        <span asp-validation-for="NameEn" class="text-danger"></span>
+    </div>
+    <div class="col-12 mb-4">
+        <label asp-for="CityId" class="input-label">المدينة</label>
+        <select class="select2 service-select" asp-for="CityId" asp-items="@ViewBag.Cities">
+            <option selected hidden disabled>اختر مدينة</option>
+        </select>
+        <span asp-validation-for="CityId" class="text-danger"></span>
+    </div>
+    <button type="submit" id="submitBtn" class="secondary-btn w-100 py-3">تعديل</button>
+</form>
+
+
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function () {
+            var submitButton = document.getElementById('submitBtn');
+            submitButton.disabled = true;
+        });
+    </script>
+}

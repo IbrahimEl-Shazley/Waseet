@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "اختر نوع الخدمة";
+}
+
+<div class="add-state">
+    <p class="p-color mb-4 font-gray title">الرجاء املئ البيانات التالية</p>
+    <div class="status">
+        <label class="font-b mb-3 font-xs">نوع الخدمة</label>
+        <select class="select2" id="CategoryType">
+            <option selected hidden value="">اختر نوع الخدمة</option>
+            <option value="@CategoryType.Sale">بيع</option>
+            <option value="@CategoryType.Rent">ايجار طويل الامد</option>
+            <option value="@CategoryType.DailyRent">ايجار يومي</option>
+            <option value="@CategoryType.Entertainment">ترفيهي</option>
+        </select>
+    </div>
+    <a onclick="SubmitCategory()" class="secondary-btn w-100 py-3">تأكيد</a>
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+
+        });
+
+        function SubmitCategory(){
+            debugger;
+            var category = $('#CategoryType').val();
+            if (category == '') {
+                toastr.error("يرجي تحديد نوع الخدمة اولا");
+                return;
+            }
+
+            window.location.href = `/Estates/Create?category=${category}`;
+
+            // $.ajax({
+            //     url: "/Estates/Create",
+            //     type: "GET",
+            //     dataType: "json",
+            //     data: {
+            //         category: category
+            //     },
+            //     success: function (result) {
+            //         window.location.href = `/Estates/Create?category=${category}`;
+            //     },
+            //     failure: function (info) {
+            //         toastr.error('حدث خطأ ما');
+            //     }
+            // });
+        }
+    </script>
+}

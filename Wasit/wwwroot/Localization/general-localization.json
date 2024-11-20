@@ -1,0 +1,494 @@
+[
+  {
+    "key": "Success",
+    "valueAr": "تم",
+    "valueEn": "Success"
+  },
+  {
+    "key": "Error",
+    "valueAr": "خطأ",
+    "valueEn": "Error"
+  },
+  {
+    "key": "InvalidCategoryType",
+    "valueAr": "قسم خاطئ",
+    "valueEn": "Invalid category type"
+  },
+  {
+    "key": "InternalServerErrorOccured",
+    "valueAr": "حدث خطأ داخلى",
+    "valueEn": "Internal Server Error"
+  },
+  {
+    "key": "BadRequest",
+    "valueAr": "خطأ فى الطلب المرسل",
+    "valueEn": "Bad Request"
+  },
+  {
+    "key": "Unauthorized",
+    "valueAr": "غير مسموح لك بالدخول",
+    "valueEn": "Not Authorized"
+  },
+  {
+    "key": "Forbidden",
+    "valueAr": "أنت لاتمتلك صلاحية لهذا الإجراء",
+    "valueEn": "You Don't Have Permission To This Action"
+  },
+  {
+    "key": "UnexpectedFailurePLeaseTryAgainLater",
+    "valueAr": "خطأ غير متوقع الرجاء المحاولة لاحقاً",
+    "valueEn": "Unexpected Failure PLease Try Again Later"
+  },
+  {
+    "key": "UserNotExist",
+    "valueAr": "المستخدم غير موجود",
+    "valueEn": "User Not Exist"
+  },
+  {
+    "key": "ItemNotExist",
+    "valueAr": "العنصر غير موجود",
+    "valueEn": "Item Not Exist"
+  },
+  {
+    "key": "PleaseProvideTheRequiredParameters",
+    "valueAr": "الرجاء ادخال العناصر المطلوبة",
+    "valueEn": "Please Provide The Required Parameters"
+  },
+  {
+    "key": "UserRegisteredSuccessfully",
+    "valueAr": "تم إنشاء حساب المستخدم بنجاح، من فضلك قم بتفعيل الحساب عن طريق ادخال الرقم المتغير المرسل إليك.",
+    "valueEn": "User Registered Successfully, Please verify The Account By Entering OTP Sended To Your Email."
+  },
+  {
+    "key": "OwnerRegisteredSuccessfully",
+    "valueAr": "تم إنشاء حساب المالك بنجاح، من فضلك قم بتفعيل الحساب عن طريق ادخال الرقم المتغير المرسل إليك.",
+    "valueEn": "Owner Registered Successfully, Please verify The Account By Entering OTP Sended To Your Email."
+  },
+  {
+    "key": "BrokerRegisteredSuccessfully",
+    "valueAr": "تم إنشاء حساب الوسيط بنجاح، من فضلك قم بتفعيل الحساب عن طريق ادخال الرقم المتغير المرسل إليك.",
+    "valueEn": "Broker Registered Successfully, Please verify The Account By Entering OTP Sended To Your Email."
+  },
+  {
+    "key": "DelegateRegisteredSuccessfully",
+    "valueAr": "تم إنشاء حساب المندوب بنجاح، من فضلك قم بتفعيل الحساب عن طريق ادخال الرقم المتغير المرسل إليك.",
+    "valueEn": "Delegate Registered Successfully, Please verify The Account By Entering OTP Sended To Your Email."
+  },
+  {
+    "key": "DeveloperRegisteredSuccessfully",
+    "valueAr": "تم إنشاء حساب المطور بنجاح، من فضلك قم بتفعيل الحساب عن طريق ادخال الرقم المتغير المرسل إليك.",
+    "valueEn": "Developer Registered Successfully, Please verify The Account By Entering OTP Sended To Your Email."
+  },
+  {
+    "key": "ThePasswordIsIncorrectPleaseTryAgain",
+    "valueAr": " كلمة المرور غير صحيحة، الرجاء المحاولة مرة أخرى",
+    "valueEn": "The Password Is Incorrect, Please Try Again"
+  },
+  {
+    "key": "TheCurrentPasswordIsIncorrectPleaseTryAgain",
+    "valueAr": " كلمة المرور الحالية غير صحيحة، الرجاء المحاولة مرة أخرى",
+    "valueEn": "The Current Password Is Incorrect, Please Try Again"
+  },
+  {
+    "key": "ThePhoneIsIncorrectPleaseTryAgain",
+    "valueAr": "رقم الهاتف غير صحيح الرجاء المحاولة مرة أخرى",
+    "valueEn": "The Phone Is Incorrect, Please Try Again"
+  },
+  {
+    "key": "UserIsBlocked",
+    "valueAr": "المستخدم محظور من الدخول للنظام برجاء مراجعة الادارة",
+    "valueEn": "User Is Blocked Please check with the administration "
+  },
+  {
+    "key": "UserActivatedSuccessfully",
+    "valueAr": "تم تفعيل المستخدم بنجاح",
+    "valueEn": "User Activated Successfully"
+  },
+  {
+    "key": "OtpSendPleaseCheckYourVerificationMethod",
+    "valueAr": "تم ارسال رمز التفعيل الى وسيلة التحقق المختارة",
+    "valueEn": "Otp Send To Your Selected Verification Method"
+  },
+  {
+    "key": "NotificationSendSuccesfullyToVerificationMethod",
+    "valueAr": "تم اعادة ارسال رمز التفعيل الى وسيلة التحقق المختارة",
+    "valueEn": "Otp Resent To Your Selected Verification Method"
+  },
+  {
+    "key": "PasswordResetedSuccessfully",
+    "valueAr": "تم إعادة تعيين كلمة السر بنجاح",
+    "valueEn": "Password Reseted Successfully"
+  },
+  {
+    "key": "UserIsAlreadyActivated",
+    "valueAr": "المستخدم مفعل بالفعل",
+    "valueEn": "User Is Already Activated"
+  },
+  {
+    "key": "ActivationCodeIsNotValidOrExpired",
+    "valueAr": "رمز التحقق غير صحيح أو منتهى",
+    "valueEn": "Activation Code Is Not Valid Or Expired"
+  },
+  {
+    "key": "ThisEmailIsAlreadyExists",
+    "valueAr": "البريد الإلكترونى مستخدم من قبل",
+    "valueEn": "This email is already registered before"
+  },
+  {
+    "key": "ThisMobileAlreadyExists",
+    "valueAr": "رقم الهاتف مستخدم من قبل",
+    "valueEn": "This phone number is already registered before"
+  },
+  {
+    "key": "ItemIsAlreadyExist",
+    "valueAr": "العنصر موجود بالفعل",
+    "valueEn": "Item Is Already Exists"
+  },
+  {
+    "key": "LoggedOutSuccessfully",
+    "valueAr": "تم تسجيل الخروج بنجاح",
+    "valueEn": "Logged Out Successfully"
+  },
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  {
+    "key": "ItemCreatedSuccessfully",
+    "valueAr": "تم الإضافه بنجاح",
+    "valueEn": "Item Created Successfully"
+  },
+  {
+    "key": "ItemUpdatedSuccessfully",
+    "valueAr": "تم التعديل بنجاح",
+    "valueEn": "Item Updated Successfully"
+  },
+  {
+    "key": "LoggedInSuccessfully",
+    "valueAr": "تم تسجيل الدخول بنجاح",
+    "valueEn": "Logged in Successfully"
+  },
+  {
+    "key": "NameIsRepeated",
+    "valueAr": "الإسم مكرر",
+    "valueEn": "Name Is Repeated"
+  },
+  {
+    "key": "OnlyArabicCharactersAllowed",
+    "valueAr": "مسموح فقط بالحروف العربية",
+    "valueEn": "Only Arabic Characters Allowed"
+  },
+  {
+    "key": "NotMeaningfulArabicName",
+    "valueAr": "اسم عربي غير ذي معنى",
+    "valueEn": "Not Meaningful Arabic Name"
+  },
+  {
+    "key": "Can'tRegister",
+    "valueAr": "لا يمكن التسجيل",
+    "valueEn": "Can't Register"
+  },
+  {
+    "key": "UserVerifiedSuccessfully",
+    "valueAr": "تم التحقق من المستخدم بنجاح",
+    "valueEn": "User Verified Successfully"
+  },
+  {
+    "key": "CommercialNoAlreadyExists",
+    "valueAr": "رقم السجل التجاري مسجل لدينا بالفعل",
+    "valueEn": "Commercial number already exists"
+  },
+  {
+    "key": "ThisPhoneAlreadyExists",
+    "valueAr": "رقم الجوال مسجل من قبل",
+    "valueEn": "This phone number is already registerd before"
+  },
+  {
+    "key": "ThisIdentityNumberAlreadyExists",
+    "valueAr": "رقم الهوية الوطنية مسجل من قبل",
+    "valueEn": "This identity number is already registerd before"
+  },
+  {
+    "key": "CommercialNoAlreadyExists",
+    "valueAr": "رقم السجل التجاري مسجل من قبل",
+    "valueEn": "This commercial number is already registerd before"
+  },
+  {
+    "key": "UserAlreadyActivated",
+    "valueAr": "رقم الجوال تم تفعيله مسبقا",
+    "valueEn": "Phone number is already activated before"
+  },
+  {
+    "key": "AccountWasRemovedSuccessfully",
+    "valueAr": "تم حذف الحساب بنجاح",
+    "valueEn": "Your account has been removed successfully"
+  },
+  {
+    "key": "OTPIsValid",
+    "valueAr": "تم التحقق من كود التفعيل بنجاح",
+    "valueEn": "The activation code has been verified successfully"
+  },
+  {
+    "key": "CodeIsNotActivated",
+    "valueAr": "يرجي ادخال كود التفعيل المرسل لهذا الرقم",
+    "valueEn": "Please enter your activation code sent to this phone number"
+  },
+
+  // ---------------------- MysharedEstates------------------------
+  {
+    "key": "YourAccountHasBeenVerified",
+    "valueAr": "تم التأكد من حسابك بنجاح",
+    "valueEn": "Your account has been verified successfully"
+  },
+  {
+    "key": "EstateNotFound",
+    "valueAr": "العقار غير موجود",
+    "valueEn": "Estate is not found"
+  },
+  {
+    "key": "EstateAlreadyExists",
+    "valueAr": "العقار موجود بالفعل لدي مستخدم اخر",
+    "valueEn": "Estate is already registerd to another user"
+  },
+  {
+    "key": "RequestNotFound",
+    "valueAr": "لم يتم العثور علي الطلب",
+    "valueEn": "Request is not found"
+  },
+  {
+    "key": "EstateCreatedSuccessfully",
+    "valueAr": "تم اضافة العقار بنجاح",
+    "valueEn": "Estate has been added successfully"
+  },
+  {
+    "key": "EstateIsAlreadyReserved",
+    "valueAr": "العقار محجوز بالفعل خلال هذه الفترة",
+    "valueEn": "Estate is already reserved in this period"
+  },
+
+  // --------------------- ConsumerEstates----------------------
+  {
+    "key": "PackageNotFound",
+    "valueAr": "لم يتم العثور علي الباقة",
+    "valueEn": "Package not found"
+  },
+  {
+    "key": "SubscriptionNotFound",
+    "valueAr": "يرجي الاشتراك في باقة اولا",
+    "valueEn": "Please subscribe to a package first"
+  },
+  {
+    "key": "SubscriptionExpired",
+    "valueAr": "تم انتهاء صلاحية الاشتراك الخاص بك",
+    "valueEn": "Your subscription has been expired"
+  },
+  {
+    "key": "MonthCountMustBeMoreThan3",
+    "valueAr": "اقل مدة للإيجار هي 3 شهور",
+    "valueEn": "The minimum rental period is 3 months"
+  },
+  {
+    "key": "EndDateMustBeGreaterThanStartDate",
+    "valueAr": "تاريخ النهاية يجب ان يكون اكبر من تاريخ البداية",
+    "valueEn": "The end date must be greater than the start date"
+  },
+  {
+    "key": "CategoryNotFound",
+    "valueAr": "قسم خاطئ",
+    "valueEn": "Category not found"
+  },
+  {
+    "key": "NotImplementedYaFlutter",
+    "valueAr": "مش تبعنا دلوقتي ،، خليها ستاتيك من عندك",
+    "valueEn": "Not in this phase, please make it static in the UI"
+  },
+  // ---------------------Consumer Requests------------------
+  {
+    "key": "PurchaseRequestStatusMustBeNewToBeCanceld",
+    "valueAr": "لا يمكن الغاء طلب شراء حالي او منتهي",
+    "valueEn": "You can't cancel current nor finished purchase request"
+  },
+  {
+    "key": "PurchaseRequestStatusMustBeCurrentToPayDeposit",
+    "valueAr": "يجب ان يكون الطلب حالي حتي تتمكن من دفع قيمة العربون",
+    "valueEn": "The request must be current in order for you to be able to pay the deposit"
+  },
+  {
+    "key": "PurchaseRequestStatusMustBeCurrentToConfirmRecievingSaleEstate",
+    "valueAr": "يجب ان يكون الطلب حالي حتي تتمكن من تأكيد استلام العقار",
+    "valueEn": "The request must be current in order for you to be able to recieve the estate"
+  },
+  {
+    "key": "PurchaseRequestStatusMustBeCurrentToAddRefundRequest",
+    "valueAr": "لا يمكن طلب استرجاع عربون في حالة تأكيد استلام او تسليم العقار من احد الطرفين",
+    "valueEn": "It is not possible to request a refund of a deposit if receipt or delivery of the property is confirmed by either party"
+  },
+  {
+    "key": "RentRequestStatusMustBeNewToBeCanceld",
+    "valueAr": "لا يمكن الغاء طلب ايجار حالي او منتهي",
+    "valueEn": "You can't cancel current nor finished rent request"
+  },
+  {
+    "key": "RentRequestStatusMustBeCurrentToPayForRent",
+    "valueAr": "يجب ان يكون الطلب حالي حتي تتمكن من دفع قيم الايجار",
+    "valueEn": "The request must be current in order for you to be able to pay the rent"
+  },
+  {
+    "key": "RentRequestStatusMustBeCurrentToConfirmRecievingRentEstate",
+    "valueAr": "يجب ان يكون الطلب حالي حتي تتمكن من تأكيد استلام العقار",
+    "valueEn": "The request must be current in order for you to be able to confirm recieving the estate"
+  },
+  {
+    "key": "RentRequestStatusMustBeFinishedToRateOwner",
+    "valueAr": "يجب ان يكون الطلب منهي حتي تتمكن من تققيم مالك العقار",
+    "valueEn": "The request must be finished in order for you to be able to rate the estate owner"
+  },
+  {
+    "key": "EntertainmentRequestStatusMustBeNewToBeCanceld",
+    "valueAr": "يجب ان يكون الطلب جديد حتي  تتمكن من الغاؤه",
+    "valueEn": "Request must be new in order to be canceled"
+  },
+  {
+    "key": "EntertainmentRequestStatusMustBeFinishedToBeRated",
+    "valueAr": "يجب ان يكون الطلب منتهي حتي  تتمكن من التقييم",
+    "valueEn": "Request must be finished in order to be rated"
+  },
+  {
+    "key": "RatingRequestStatusMustBeFinishedToRateReviewer",
+    "valueAr": "يجب ان يكون الطلب منتهي حتي  تتمكن من التقييم",
+    "valueEn": "Request must be finished in order to rate the reviewer"
+  },
+  {
+    "key": "DailyRentRequestStatusMustBeNewToBeCanceld",
+    "valueAr": "يجب ان يكون الطلب جديد حتي  تتمكن من الغاؤه",
+    "valueEn": "Request must be new in order to be canceled"
+  },
+  {
+    "key": "DailyRentRequestStatusMustBeNewToBeRated",
+    "valueAr": "يجب ان يكون الطلب منتهي حتي  تتمكن من التقييم",
+    "valueEn": "Request must be finished in order to rate the reviewer"
+  },
+  {
+    "key": "AlreadyRated",
+    "valueAr": "تم التقييم من قبل",
+    "valueEn": "You've already sent your rating before"
+  },
+  {
+    "key": "MaintainanceOrderNotFinishedToBeRated",
+    "valueAr": "طلب الصيانة يجب ان يكون منتهي حتي تتمكن من تقييمه",
+    "valueEn": "Maintainance order has to be finished to be able to rate it"
+  },
+  {
+    "key": "ApartmentNotFound",
+    "valueAr": "لم يتم العثور علي هذه الشقة",
+    "valueEn": "Apartment is not found"
+  },
+  {
+    "key": "PaidSuccessfully",
+    "valueAr": "تم الدفع بنجاح",
+    "valueEn": "Paid successfully"
+  },
+  {
+    "key": "NotificationNotFound",
+    "valueAr": "لم يتم العثور علي الاشعار",
+    "valueEn": "Not found"
+  },
+  {
+    "key": "TheCurrentPhoneIsIncorrectPleaseTryAgain",
+    "valueAr": "رقم الجوال الحالي غير صحيح",
+    "valueEn": "Your current phone number is not correct"
+  },
+  {
+    "key": "TheNewPhoneIsTheSameAsTheCurrentPhonePleaseTryAgain",
+    "valueAr": "رقم الجوال الجديد يطابق رقم الجوال الحالي",
+    "valueEn": "New phone number is the same as current phone"
+  },
+  {
+    "key": "TheNewPasswordIsTheSameAsTheCurrentPasswordPleaseTryAgain",
+    "valueAr": "كلمة المرور الجديدة تطابق كلمة المرور الحالية",
+    "valueEn": "New password is the same as current password"
+  },
+  {
+    "key": "PriceTooLowThan45Percent",
+    "valueAr": "يرجي ادخال سعر اكبر من 45% من قيمة العقار",
+    "valueEn": "Please, enter price more than 45% of estate value"
+  },
+  {
+    "key": "EstateIsNotSold",
+    "valueAr": "لم يتم دفع قيمة العربون بعد",
+    "valueEn": "Deposit value hasn't been paid yet"
+  },
+  {
+    "key": "RequestAlreadySent",
+    "valueAr": "تم ارسال الطلب من قبل",
+    "valueEn": "you've already sent a request before"
+  },
+  {
+    "key": "RequestAlreadySentWithSameDeedNumber",
+    "valueAr": "تم ارسال طلب ادارة العقار بنفس الرقم المرجعي",
+    "valueEn": "You've already sent a request with the same deed number"
+  },
+  {
+    "key": "EstateAlreadyReserved",
+    "valueAr": "العقار محجوز الان بالفعل، يرجي المحاولة في وقت اخر",
+    "valueEn": "Estate is already reserved right now, try again later"
+  },
+  {
+    "key": "EstateHasNoDeposit",
+    "valueAr": "لم يتم تحديد قيمة العربون حتي الان، يرجي المحاولة في وقت لاخق",
+    "valueEn": "The deposit amount has not been determined yet, please try again later"
+  },
+  {
+    "key": "EstateCanNotBeRemoved",
+    "valueAr": "لا يمكن حذف العقار بسبب وجود طلبات حالية مرتبطة به",
+    "valueEn": "The property cannot be deleted because there are existing requests associated with it"
+  },
+  {
+    "key": "RequestIsNotAccepted",
+    "valueAr": "لم يتم قبول الطلب بعد",
+    "valueEn": "Request has not been accepted yet"
+  },
+  {
+    "key": "EstateNotAvailableForBooking",
+    "valueAr": "العقار غير متاح للحجز في الوقت الحالي",
+    "valueEn": "Estate is not available for reservation right now"
+  },
+  {
+    "key": "EstateNotAvailableForBookingInTheseDays",
+    "valueAr": "العقار غير متاح للحجز في الايام المختارة",
+    "valueEn": "Estate is not available for reservation in the selected days"
+  },
+  {
+    "key": "RequestNotFinished",
+    "valueAr": "الطلب غير منتهي بعد",
+    "valueEn": "Request is not finished yet"
+  },
+  {
+    "key": "EstateNotAvailableForBookingToday",
+    "valueAr": "العقار غير متاح للحجز خلال اليوم الحالي، يرجي عدم اختيار اليوم الحالي من ضمن الايام المراد حجز العقار خلالها",
+    "valueEn": "The property is not available for booking today. Please do not select today as one of the days you want to book the property for."
+  },
+  {
+    "key": "RequestCanNotBeAccepted",
+    "valueAr": "لا يمكن قبول هذا الطلب في الوقت الحالي",
+    "valueEn": "Request can't be accepted right now"
+  },
+  {
+    "key": "RequestCanNotBeRejected",
+    "valueAr": "لا يمكن رفض هذا الطلب في الوقت الحالي",
+    "valueEn": "Request can't be rejected right now"
+  },
+  {
+    "key": "OtherRequestIsAlreadyPaid",
+    "valueAr": "تم دفع قيمة العربون من قبل شخص اخر",
+    "valueEn": "The deposit amount has been paid by another person"
+  },
+  {
+    "key": "SomeoneElseHasCurrentPurchaseRequest",
+    "valueAr": "لا يمكن ارسال طلب الشراء حيث يوجد طلب شراء حالي في الوقت الراهن، يرجي المحاولة لاحقا في حالة عدم اتمام طلب العميل الاخر بنجاح",
+    "valueEn": "The purchase request cannot be sent as there is a cuurent purchase request at the moment. Please try again later if the customer's request is not completed successfully."
+  },
+  {
+    "key": "ClientHasRefundRequest",
+    "valueAr": "العميل قام بطلب استرجاع العربون، ويتم مراجعة الطلب حاليا من قبل الادراة",
+    "valueEn": "Client has refund request and it's being reviewed by the app management"
+  }
+
+]

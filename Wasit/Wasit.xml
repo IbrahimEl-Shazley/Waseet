@@ -1,0 +1,754 @@
+<?xml version="1.0"?>
+<doc>
+	<assembly>
+		<name>Wasit.API</name>
+	</assembly>
+	<members>
+		<member name="M:Wasit.Controllers.AuthController.OwnerRegisteration(Wasit.Services.DTOs.Schema.SEC.OwnerRegisterDTO)">
+			<summary>
+				You can register new Owner Accounts here.
+			</summary>
+			<remarks>
+				All parameters in request body can not be null.
+
+				NOTE: You can only add phone number that matches => ^(5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$
+
+				NOTE: You can only add identity number that matches => ^[1|2]{1}[0-9]{9}$
+
+				NOTE: You can only add IBAN that matches => ^SA\d{2}[A-Z0-9]{22}$
+
+				Sample request:
+
+					POST / OwnerRegisteration
+					{
+						"ImgProfile": Your Image ,
+						"UserName": Abdullah Mohammed,
+						"PhoneNumber": 512345678,
+						"IDNumber": IDNumber,
+						"RegionId": 1,
+						"Lat": 2.4563 ,
+						"Lng": 2.365,
+						"Location": Location,
+						"BankName": BankName,
+						"AccOwnerName": AccOwnerName,
+						"AccNumber": AccNumber,
+						"IbanNumber": IbanNumber,
+						"Password": 123456,
+					}
+
+			</remarks>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">internal server error</response>
+		</member>
+		<member name="M:Wasit.Controllers.AuthController.BrokerRegisteration(Wasit.Services.DTOs.Schema.SEC.BrokerRegisterDTO)">
+			<summary>
+				You can register new Broker accounts here for the two Broker types (Individual or Facility) .
+			</summary>
+			<remarks>
+				All parameters in the request body can not be null within FacilityType , CommercialNo and WorkingDocumentNo.
+
+				NOTE: You can only add phone number that matches => ^(5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$
+
+				NOTE: You can only add identity number that matches => ^[1|2]{1}[0-9]{9}$
+
+				NOTE: You can only add IBAN that matches => ^SA\d{2}[A-Z0-9]{22}$
+
+				NOTE: You can only add CommercialNo that matches => ^\d{10}$
+
+				Sample request:
+
+					POST / BrokerRegisteration
+					{
+						"AccountType": 1 (this account for Individual),
+						"ImgProfile": Your Image ,
+						"UserName": Abdullah Mohammed,
+						"PhoneNumber": 512345678,
+						"IDNumber": IDNumber,
+						"RegionId": 1,
+						"Lat": 2.4563 ,
+						"Lng": 2.365,
+						"Location": Location,
+						"BrokerageDocumentNo": BrokerageDocumentNo,
+						"BankName": BankName,
+						"AccOwnerName": AccOwnerName,
+						"AccNumber": AccNumber,
+						"IbanNumber": IbanNumber,
+						"Password": 123456,
+					}
+
+					OR
+
+					POST / BrokerRegisteration
+					{
+						"AccountType": 2 (this account for Origin),
+						"ImgProfile": Your Image ,
+						"UserName": Abdullah Mohammed,
+						"PhoneNumber": 512345678,
+						"IDNumber": IDNumber,
+						"RegionId": 1,
+						"Lat": 2.4563 ,
+						"Lng": 2.365,
+						"Location": Location,
+						"FacilityType": 1 (this enum that contain Office=1,Institution=2,Company=3),
+						"BrokerageDocumentNo": BrokerageDocumentNo ,
+						"CommercialNo": CommercialNo,
+						"WorkingDocumentNo": WorkingDocumentNo,
+						"BankName": BankName,
+						"AccOwnerName": AccOwnerName,
+						"AccNumber": AccNumber,
+						"IbanNumber": IbanNumber,
+						"Password": 123456,
+					}
+			</remarks>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">internal server error</response>
+		</member>
+		<member name="M:Wasit.Controllers.AuthController.DelegateRegisteration(Wasit.Services.DTOs.Schema.SEC.DelegateRegisterDTO)">
+			<summary>
+				You can register new Delegate Accounts here.
+			</summary>
+			<remarks>
+				All the parameters in the request body can not be null.
+
+				NOTE: You can only add phone number that matches => ^(5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$
+
+				NOTE: You can only add identity number that matches => ^[1|2]{1}[0-9]{9}$
+
+				NOTE: You can only add IBAN that matches => ^SA\d{2}[A-Z0-9]{22}$
+
+				Sample request:
+
+					POST / DelegateRegisteration
+					{
+						"ImgProfile": Your Image ,
+						"UserName": Abdullah Mohammed,
+						"PhoneNumber": 512345678,
+						"IDNumber": 1512345678,
+						"RegionId": 1,
+						"Lat": 2.4563 ,
+						"Lng": 2.365,
+						"Location": Location,
+						"WorkingDocumentNo": WorkingDocumentNo,
+						"BankName": BankName,
+						"AccOwnerName": AccOwnerName,
+						"AccNumber": AccNumber,
+						"IbanNumber": IbanNumber,
+						"Password": 123456,
+					}
+			</remarks>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">internal server error</response>
+		</member>
+		<member name="M:Wasit.Controllers.AuthController.DeveloperRegisteration(Wasit.Services.DTOs.Schema.SEC.DeveloperRegisterDTO)">
+			<summary>
+				You can register new Developer accounts here.
+			</summary>
+			<remarks>
+				All parameters in request body can not be null.
+
+				NOTE: You can only add phone number that matches => ^(5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$
+
+				NOTE: You can only add IBAN that matches => ^SA\d{2}[A-Z0-9]{22}$
+
+				Sample request:
+
+					POST / DeveloperRegistration
+					{
+						"ImgProfile": Your Image ,
+						"UserName": Abdullah Mohammed,
+						"PhoneNumber": 512345678,
+						"Email": Email@Wasit.com,
+						"RegionId": 1,
+						"Lat": 2.4563 ,
+						"Lng": 2.365,
+						"Location": Location,
+						"CoverPhoto": Your Cover Photo,
+						"Description": Description,
+						"BankName": BankName,
+						"AccOwnerName": AccOwnerName,
+						"AccNumber": AccNumber,
+						"IbanNumber": IbanNumber,
+						"Password": 123456,
+					}
+			</remarks>
+			<response code="200">Success</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">internal server error</response>
+		</member>
+		<member name="M:Wasit.Controllers.AuthController.ActivateUser(Wasit.Services.DTOs.Schema.SEC.UserVerifyDTO)">
+			<summary>
+				You can active your code here.
+			</summary>
+			<remarks>
+				All the parameters in the request body can not be null.
+
+				NOTE: this code will arrive to the user on him phone number and he will enter it her to active him account ,
+				For testing you have GetOTP this is end point you can enter the token that return on Register Response it will return user OTP.
+
+				Sample request:
+
+					POST / ActivateUser
+					{
+						"OTP": 1234,
+					}
+			</remarks>
+			<response code="200">Success</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">internal server error</response>
+		</member>
+		<member name="M:Wasit.Controllers.AuthController.ResendActivationOTP(System.String)">
+			<summary>
+				You can Resend Activation OTP code here.
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">internal server error</response>
+		</member>
+		<member name="M:Wasit.Controllers.AuthController.Login(Wasit.Services.DTOs.Schema.SEC.UserLoginDto)">
+			<summary>
+				You can Login to any Account here.
+			</summary>
+			<remarks>
+				All the parameters in the request body can not be null.
+
+				NOTE: You can only add phone number that matches => ^(5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$
+
+				Sample request:
+
+					POST / Login
+					{
+						"PhoneNumber": 512345678,
+						"Password": 123456,
+						"RememberMe": True / False,
+					}
+			</remarks>
+			<response code="200">Success</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">internal server error</response>
+		</member>
+		<member name="M:Wasit.Controllers.AuthController.ForgetPassword(Wasit.Services.DTOs.Schema.SEC.ForgetPasswordDTO)">
+			<summary>
+				You can tell us that you are forget password.
+			</summary>
+			<remarks>
+				All the parameters in the request body can not be null.
+				her we make sure that the number which entered is registered if yes we will send sms to this number new otp
+
+				NOTE: You can only add phone number that matches => ^(5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$
+
+				Sample request:
+
+					POST / ForgetPassword
+					{
+						"PhoneNumber": 512345678,
+					}
+			</remarks>
+			<response code="200">Success</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">internal server error</response>
+		</member>
+		<member name="M:Wasit.Controllers.AuthController.VaildateOTP(Wasit.Services.DTOs.Schema.SEC.VaildateOTPDTO)">
+			<summary>
+				You can Vaildate OTP here.
+			</summary>
+			<remarks>
+				All the parameters in the request body can not be null.
+
+				Sample request:
+
+					POST / VaildateOTP
+					{
+						"Phone": 512345678,
+						"Code": 1234,
+					}
+			</remarks>
+			<response code="200">Success</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">internal server error</response>
+		</member>
+		<member name="M:Wasit.Controllers.AuthController.ResetPassword(Wasit.Services.DTOs.Schema.SEC.ResetPasswordDTO)">
+			<summary>
+				You can Reset Account Password here.
+			</summary>
+			<remarks>
+				All the parameters in the request body can not be null.
+
+				NOTE: You can only add phone number that matches => ^(5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$
+
+				Sample request:
+
+					POST / ResetPassword
+					{
+						"PhoneNumber": 512345678,
+						"OTP": 1234,
+						"NewPassword": 123456,
+					}
+			</remarks>
+			<response code="200">Success</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">internal server error</response>
+		</member>
+		<member name="M:Wasit.Controllers.AuthController.Logout(Wasit.Services.DTOs.Schema.SEC.LogoutDTO)">
+			<summary>
+				You can LogOut from here.
+			</summary>
+			<remarks>
+				All parameters in request body can not be null.
+
+				Sample request:
+
+				POST / Logout
+				{
+				"DeviceId": 123456,
+				}
+			</remarks>
+			<response code="200">Success</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">internal server error</response>
+		</member>
+		<member name="M:Wasit.Controllers.AuthController.RemoveAccount">
+			<summary>
+				You can Remove your account from here.
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">internal server error</response>
+		</member>
+		<member name="M:Wasit.Controllers.AuthController.GetOTP">
+			<summary>
+				You can get OTP from here using token (this for testing).
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">internal server error</response>
+		</member>
+        <member name="M:Wasit.Controllers.AuthController.GetOTP">
+            <summary>
+            You can get OTP from here using token (this for testing).
+            </summary>
+            <response code="200">Success</response>
+            <response code="400">BadRequest Or Exception</response>
+            <response code="500">internal server error</response>
+        </member>
+		<member name="M:Wasit.Controllers.AuthController.GetOTPAnon(System.String)">
+			<summary>
+			You can get OTP from here using token (this for testing).
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		
+		<member name="M:Wasit.API.Controllers.MyEstates.MySharedEstatesController.ConfirmEstateDeedNumber(Wasit.Core.Enums.CategoryType,System.String)">
+			<summary>
+				You can confirm estate deed number here.
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.MySharedEstatesController.GetEstateTypes(Wasit.Core.Enums.CategoryType)">
+			<summary>
+				You can list estate types from here. 
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.MySharedEstatesController.ListMyEstates(Wasit.Core.Enums.CategoryType,System.Int32)">
+			<summary>
+				You can list the publisher estates from here.
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.MySharedEstatesController.GetSpecsForm(System.Int64)">
+			<summary>
+				You can get the form for additional specs when adding new estate from here.
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.MySharedEstatesController.ChangeEstateVisibility(Wasit.Core.Enums.CategoryType,System.Int64)">
+			<summary>
+				You can change the visibility of the estate from here.
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.MySharedEstatesController.RemoveEstate(Wasit.Core.Enums.CategoryType,System.Int64)">
+			<summary>
+				You can remove the estate from here.
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.MySharedEstatesController.ReportComment(Wasit.Core.Enums.CategoryType,System.Int64,System.String)">
+			<summary>
+				You can report violated comment from here. (daily, entertainment)
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.MySharedEstatesController.ListEstateRatings(Wasit.Core.Enums.CategoryType,System.Int64,System.Int32)">
+			<summary>
+				You can list estate ratings from here. (daily, entertainment)
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.MySharedEstatesController.SelectReservationPeriod(Wasit.Core.Enums.CategoryType,System.Int64,System.DateTime,System.DateTime)">
+			<summary>
+				You can select reservation period from here. (daily, entertainment)
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.MySharedEstatesController.DownloadFinancialAccounts(Wasit.Core.Enums.CategoryType,System.Int64,System.DateTime,System.DateTime)">
+			<summary>
+				You can download financial accounts from here. (daily, entertainment)
+			</summary>
+			<response code="200">Success</response>
+			<response code="400">BadRequest or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		
+		<member name="M:Wasit.API.Controllers.MyEstates.SaleEstatesController.AddNewSaleEstate(Wasit.Services.DTOs.Schema.Sale.SaleEstate.CreateSaleEstateDto)">
+			<summary>
+				Add new sale estate
+			</summary>
+			<remarks>
+				Sample request:
+
+				{
+				"lang": "ar",
+				}
+
+			</remarks>
+			<param lang="ar">ar or en</param>
+			<returns>return status code </returns>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest or Exception</response>
+			<response code="500">Internal server error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.SaleEstatesController.MySaleEstateInfo(System.Int64)">
+			<summary>
+				You can get your sale estate info from here.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.SaleEstatesController.EditSaleEstate(Wasit.Services.DTOs.Schema.Sale.SaleEstate.UpdateSaleEstateDto)">
+			<summary>
+				Edit sale estate
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.SaleEstatesController.GetSpecificationValues(System.Int64)">
+			<summary>
+				Get specification values when editing a sale estate
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.SaleEstatesController.ListSaleReservationRequests(Wasit.Services.DTOs.Schema.Sale.SaleReservationRequest.ListReservationRequestsModel)">
+			<summary>
+				List sale reservation requests.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.SaleEstatesController.ReservationSaleRequestInfo(System.Int64)">
+			<summary>
+				Reservation sale request info.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.SaleEstatesController.ListSaleRatingRequests(Wasit.Services.DTOs.Schema.Sale.SaleRatingRequest.ListRatingRequestsModel)">
+			<summary>
+				List sale rating requests.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.SaleEstatesController.SaleRatingRequestInfo(System.Int64)">
+			<summary>
+				Sale rating request info.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.SaleEstatesController.ListPurchaseRequests(Wasit.Services.DTOs.Schema.Sale.PurchaseRequest.ListPurchaseRequestsModel)">
+			<summary>
+				List purchase requests.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.SaleEstatesController.AcceptPurchaseRequest(System.Int64)">
+			<summary>
+				Accept purchase request.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.SaleEstatesController.RejectPurchaseRequest(System.Int64)">
+			<summary>
+				Reject purchase request.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.SaleEstatesController.ConfirmEstateIsSold(System.Int64,System.Double)">
+			<summary>
+				Confirm estate is sold.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.SaleEstatesController.AddPricingRequest(System.Int64,Wasit.Core.Enums.TypePay)">
+			<summary>
+				Add pricing request.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.AddNewRentEstate(Wasit.Services.DTOs.Schema.Rent.RentEstate.CreateRentEstateDto)">
+			<summary>
+				Add new rent estate.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.MyRentEstateInfo(System.Int64)">
+			<summary>
+				Get my rent estate info.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.MyRentEstateInfo(System.Int64)">
+			<summary>
+				Get my rent estate info.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.EditRentEstate(Wasit.Services.DTOs.Schema.Rent.RentEstate.UpdateRentEstateDto)">
+			<summary>
+				Edit rent estate.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.GetSpecificationValues(System.Int64)">
+			<summary>
+				Get specification values.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.ListRentReservationRequests(Wasit.Services.DTOs.Schema.Sale.SaleReservationRequest.ListReservationRequestsModel)">
+			<summary>
+				List rent reservation requests.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.ReservationRentRequestInfo(System.Int64)">
+			<summary>
+				Reservation rent request info.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.ListRentRatingRequests(Wasit.Services.DTOs.Schema.Sale.SaleRatingRequest.ListRatingRequestsModel)">
+			<summary>
+				List rent rating requests.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.RentRatingRequestInfo(System.Int64)">
+			<summary>
+				Rent rating request info.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.ListRentRequests(Wasit.Services.DTOs.Schema.Rent.RentRequest.ListRentRequestsModel)">
+			<summary>
+				List rent requests.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.RentRequestInfo(System.Int64)">
+			<summary>
+				Rent request info.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.AcceptRentRequest(System.Int64)">
+			<summary>
+				Accept rent request.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.RejectRentRequest(System.Int64)">
+			<summary>
+				Reject rent request.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.RentEstatesController.ConfirmEstateIsRented(System.Int64)">
+			<summary>
+				Confirm estate is rented.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+
+		<member name="M:Wasit.API.Controllers.MyEstates.EntertainmentEstatesController.AddNewEntertainmentEstate(Wasit.Services.DTOs.Schema.Entertainment.EntertainmentEstate.CreateEntertainmentEstateDto)">
+			<summary>
+				Add new entertainment estate.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.EntertainmentEstatesController.MyEntertainmentEstateInfo(System.Int64)">
+			<summary>
+				My entertainment estate info.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.EntertainmentEstatesController.EditEntertainmentEstate(Wasit.Services.DTOs.Schema.Entertainment.EntertainmentEstate.UpdateEntertainmentEstateDto)">
+			<summary>
+				Edit entertainment estate.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.EntertainmentEstatesController.ListEntertainmentRentRequests(Wasit.Services.DTOs.Schema.Entertainment.EntertainmentRentRequest.ListEntertainmentRequestsModel)">
+			<summary>
+				List entertainment rent requests.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.EntertainmentEstatesController.EntertainmentRentRequestInfo(System.Int64)">
+			<summary>
+				Entertainment rent request info.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+
+		<member name="M:Wasit.API.Controllers.MyEstates.DailyRentEstatesController.AddNewDailyRentEstate(Wasit.Services.DTOs.Schema.DailyRent.DailyRentEstates.CreateDailyRentEstateDto)">
+			<summary>
+				Add new daily rent estate.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.DailyRentEstatesController.MyDailyRentEstateInfo(System.Int64)">
+			<summary>
+				My daily rent estate info.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.DailyRentEstatesController.EditDailyRentEstate(Wasit.Services.DTOs.Schema.DailyRent.DailyRentEstates.UpdateDailyRentEstateDto)">
+			<summary>
+				Edit daily rent estate.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.DailyRentEstatesController.ListDailyRentRequests(Wasit.Services.DTOs.Schema.DailyRent.DailyRentRequest.ListDailyRentRequestsModel)">
+			<summary>
+				Entertainment rent requests.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		<member name="M:Wasit.API.Controllers.MyEstates.DailyRentEstatesController.DailyRentRequestInfo(System.Int64)">
+			<summary>
+				Daily rent request info.
+			</summary>
+			<response code="200">Sucess</response>
+			<response code="400">BadRequest Or Exception</response>
+			<response code="500">Internal Server Error</response>
+		</member>
+		
+
+		<member name="T:Wasit.API.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Wasit.API.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Wasit.API.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>   
+        </member>
+    </members>
+</doc>

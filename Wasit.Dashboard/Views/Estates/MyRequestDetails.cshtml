@@ -1,0 +1,419 @@
+﻿@model Wasit.Services.ViewModels.Estates.MyEstates.MyRequestDetailsViewModel
+
+@{
+    ViewData["Title"] = "تفاصيل الطلب";
+}
+
+
+<div class="add-state mb-5">
+    <div class="d-flex justify-content-center">
+        <div class="w-100">
+            <h4 class="mb-5 font-b text-center">@ViewData["Title"]</h4>
+            <div class="product ">
+                <div class="product-content d-flex w-100 px-3 py-3">
+                    <div>
+                        <img class="mx-2 product-img" src="@Model.EstateInfo.Image" alt="Card image cap">
+                    </div>
+                    <div class="d-flex flex-column w-100">
+                        <h5 class="font-b">@Model.EstateInfo.Name</h5>
+                        <div class="location d-flex justify-content-between flex-wrap">
+                            <div class="d-flex justify-content-center align-items-center ms-3">
+                                <img class="mx-1" src="~/imgs/location.png" alt="">
+                                <p>@Model.EstateInfo.Address</p>
+                            </div>
+                            <p>@Model.EstateInfo.Number :الرقم المرجعي</p>
+                        </div>
+                        <div class="price d-flex justify-content-between align-items-center flex-wrap">
+                            <p>السعر المعلن : <span>@Model.EstateInfo.Price ريال</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="site-card p-3">
+        <span hidden>@Model.Id</span>
+        <div class="header">
+            <h4> معلومات صاحب الطلب:</h4>
+        </div>
+        <div class="pt-3">
+            <p class="m-0 dark-blue font-b">@Model.UserName</p>
+        </div>
+    </div>
+
+
+    @if (ViewBag.category == CategoryType.Sale || ViewBag.category == CategoryType.Rent)
+    {
+        @if (ViewBag.type == (int)SaleRequestType.ReservationRequest)
+        {
+            <div class="site-card p-3">
+                <div class="header">
+                    <h4>الوقت المتبقى لانهاء الطلب:</h4>
+                </div>
+                <div class="pt-3">
+                    <p class="m-0 dark-blue font-b">@Model.ReservationRequestDetails?.TimeSpan</p>
+                </div>
+            </div>
+        }
+
+        @if (ViewBag.type == (int)SaleRequestType.RatingRequest)
+        {
+            <div class="site-card p-3">
+                <div class="header">
+                    <h4>سعر التقييم:</h4>
+                </div>
+                <div class="pt-3">
+                    <p class="m-0 dark-blue font-b">@Model.RatingRequestDetails?.Price رس</p>
+                </div>
+            </div>
+            <div class="site-card p-3">
+                <div class="header">
+                    <h4>معلومات المندوب:</h4>
+                </div>
+                <div class="pt-3">
+                    <p class="m-0 dark-blue font-b">@Model.RatingRequestDetails?.DelegateName</p>
+                </div>
+            </div>
+            if (Model.RatingRequestDetails.Report != null)
+            {
+                <div class="site-card p-3">
+                    <div class="header">
+                        <h4>تقرير المندوب:</h4>
+                    </div>
+                    <a href="@Model.RatingRequestDetails.Report">
+                        <div class="pt-3">
+                            <i class="fa-solid fa-file-pdf pdf-icon"></i>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+    }
+
+    @if (ViewBag.category == CategoryType.Sale && ViewBag.type == (int)SaleRequestType.PurchaseRequest)
+    {
+        if (Model.PurchaseRequestDetails?.FinalPrice > 0)
+        {
+            <div class="site-card p-3">
+                <div class="header">
+                    <h4>السعر النهائي للبيع:</h4>
+                </div>
+                <div class="pt-3">
+                    <p class="m-0 dark-blue font-b">@Model.PurchaseRequestDetails.FinalPrice رس</p>
+                </div>
+            </div>
+        }
+
+        if (!Model.PurchaseRequestDetails.IsAccepted && !Model.PurchaseRequestDetails.IsRejected)
+        {
+            <div class="buy-details-btns d-flex justify-content-around">
+                <span hidden>@Model.PurchaseRequestDetails.Id</span>
+                <button id="accept-purchase" class="accept">
+                    <i class="fa-solid fa-check"></i>
+                    <span>قبول</span>
+                </button>
+                <button id="reject-purchase" class="reject">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                    <span>رفض</span>
+                </button>
+            </div>
+        }
+
+        <div class="mx-3 cursor-p text-center shadow-btns">
+            @if (Model.PurchaseRequestDetails.IsPaid && Model.PurchaseRequestDetails.FinalPrice == 0)
+            {
+                <div class="done-btn row">
+                    <div class="col-3 justify-content-center d-flex flex-column align-items-center">
+                        <img src="~/imgs/app.png" alt="icon" class="app-icon">
+                        <p class="font-xxxs">تطبيق تاجر</p>
+                    </div>
+                    <button class="secondary-btn py-3 mb-3 col-8" data-bs-toggle="modal" data-bs-target="#buy-modal">
+                        تم البيع واستلام المال
+                    </button>
+                </div>
+            }
+            else
+            {
+                <div class="app">
+                    <img src="~/imgs/app.png" alt="icon" class="app-icon">
+                    <p class="p-color font-xs my-2 font-xxxs">تطبيق تاجر</p>
+                </div>
+            }
+        </div>
+    }
+
+    @if (ViewBag.category == CategoryType.Rent && ViewBag.type == (int)RentRequestType.RentRequest)
+    {
+        <div class="site-card p-3">
+            <div class="header">
+                <h4>مدة الايجار: </h4>
+            </div>
+            <div class="pt-3">
+                <p class="m-0 dark-blue font-b">@Model.RentRequestDetails?.MonthsCount شهور</p>
+            </div>
+            <div class="pt-3">
+                <p class="m-0 dark-blue font-b">@Model.RentRequestDetails?.YearsCount سنوات</p>
+            </div>
+        </div>
+
+        if (!Model.RentRequestDetails.IsAccepted && Model.RentRequestDetails.StatusEnum == RentStatus.New)
+        {
+            <div class="buy-details-btns d-flex justify-content-around">
+                <span hidden>@Model.RentRequestDetails.Id</span>
+                <button id="accept-rent" class="accept">
+                    <i class="fa-solid fa-check"></i>
+                    <span>قبول</span>
+                </button>
+                <button id="reject-rent" class="reject">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                    <span>رفض</span>
+                </button>
+            </div>
+        }
+
+        <div class="mx-3 cursor-p text-center shadow-btns">
+            @if (Model.RentRequestDetails.IsAccepted && Model.RentRequestDetails.IsPaid && !Model.RentRequestDetails.IsRented)
+            {
+                <div class="done-btn row">
+                    <div class="col-3 justify-content-center d-flex flex-column align-items-center">
+                        <img src="~/imgs/app.png" alt="icon" class="app-icon">
+                        <p class="font-xxxs">تطبيق تاجر</p>
+                    </div>
+                    <button class="secondary-btn py-3 mb-3 col-8" onclick="ConfirmEstateIsRented()">
+                        تم الايجار
+                    </button>
+                </div>
+            }
+            else
+            {
+                <div class="app">
+                    <img src="~/imgs/app.png" alt="icon" class="app-icon">
+                    <p class="p-color font-xs my-2 font-xxxs">تطبيق تاجر</p>
+                </div>
+            }
+        </div>
+    }
+
+    @if (ViewBag.category == CategoryType.DailyRent)
+    {
+        <div class="site-card p-3">
+            <div class="header">
+                <h4> معلومات الحجز: </h4>
+            </div>
+            <div class="pt-3">
+                <span> عدد ايام الحجز</span> <p class="m-0 dark-blue font-b">@Model.DailyRentRequestDetails?.DaysCount</p>
+            </div>
+            <div class="pt-3">
+                <span> تاريخ الوصول </span> <p class="m-0 dark-blue font-b">@Model.DailyRentRequestDetails?.ArrivalDate</p>
+            </div>
+            <div class="pt-3">
+                <span> تاريخ المغادرة</span> <p class="m-0 dark-blue font-b">@Model.DailyRentRequestDetails?.DepartureDate</p>
+            </div>
+            <div class="pt-3">
+                <span> الوقت المتبقي لانتهاء الحجز</span> <p class="m-0 dark-blue font-b">@Model.DailyRentRequestDetails?.TimeSpan</p>
+            </div>
+            @if (Model.DailyRentRequestDetails.StatusEnum == DailyRentStatus.Canceled)
+            {
+                <div class="pt-3">
+                    <span> تاريخ الغاء الطلب</span> <p class="m-0 dark-blue font-b">@Model.DailyRentRequestDetails?.CancelDate</p>
+                </div>
+            }
+        </div>
+    }
+
+    @if (ViewBag.category == CategoryType.Entertainment)
+    {
+        <div class="site-card p-3">
+            <div class="header">
+                <h4> معلومات الحجز: </h4>
+            </div>
+            <div class="pt-3">
+                <span> عدد ايام الحجز</span> <p class="m-0 dark-blue font-b">@Model.EntertainmentRentRequestDetails?.DaysCount</p>
+            </div>
+            <div class="pt-3">
+                <span> تاريخ الوصول </span> <p class="m-0 dark-blue font-b">@Model.EntertainmentRentRequestDetails?.ArrivalDate</p>
+            </div>
+            <div class="pt-3">
+                <span> تاريخ المغادرة</span> <p class="m-0 dark-blue font-b">@Model.EntertainmentRentRequestDetails?.DepartureDate</p>
+            </div>
+            <div class="pt-3">
+                <span> الوقت المتبقي لانتهاء الحجز</span> <p class="m-0 dark-blue font-b">@Model.EntertainmentRentRequestDetails?.TimeSpan</p>
+            </div>
+            @if (Model.EntertainmentRentRequestDetails.StatusEnum == DailyRentStatus.Canceled)
+            {
+                <div class="pt-3">
+                    <span> تاريخ الغاء الطلب</span> <p class="m-0 dark-blue font-b">@Model.EntertainmentRentRequestDetails?.CancelDate</p>
+                </div>
+            }
+        </div>
+    }
+
+</div>
+
+
+<!-- start buy modal -->
+<div class="modal fade" id="buy-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-b" id="staticBackdropLabel">السعر النهائي للبيع</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @* <p class="text-center mb-4">مولد النص العربي هذا النص هو مثال لنص يمكن ان يستبدل</p> *@
+                <div class="commint">
+                    <h6 class="mb-2 font-b">السعر النهائي لبيع عقارك</h6>
+                    <input id="final-price" type="text" class="site-input m-0" placeholder="ادخل السعر النهائي لبيع عقارك هنا">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a onclick="ConfirmEstateIsSold()" class="secondary-btn w-100 py-3">تأكيد</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end buy modal -->
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#accept-purchase").on("click", function () {
+                var id = $(this).siblings("span").text();
+
+                $.ajax({
+                    url: "/Estates/AcceptPurchaseRequest",
+                    type: "PUT",
+                    dataType: "json",
+                    data: {
+                        id: id
+                    },
+                    success: function (result) {
+                        $(".buy-details-btns").addClass("d-none")
+                        $('.app').addClass("d-none")
+                        $(".done-btn").removeClass("d-none")
+                    },
+                    failure: function (info) {
+                        toastr.error("حدث خطأ ما")
+                    }
+                });
+
+            })
+
+
+            $("#reject-purchase").on("click", function () {
+                var id = $(this).siblings("span").text();
+
+                $.ajax({
+                    url: "/Estates/RejectPurchaseRequest",
+                    type: "PUT",
+                    dataType: "json",
+                    data: {
+                        id: id
+                    },
+                    success: function (result) {
+                        window.location.href = "/Estates/MyPurchaseRequests?estateId=@Model.EstateInfo.Id"
+                    },
+                    failure: function (info) {
+                        toastr.error("حدث خطأ ما")
+                    }
+                });
+
+            })
+
+            $("#accept-rent").on("click", function () {
+                var id = $(this).siblings("span").text();
+
+                $.ajax({
+                    url: "/Estates/AcceptRentRequest",
+                    type: "PUT",
+                    dataType: "json",
+                    data: {
+                        id: id
+                    },
+                    success: function (result) {
+                        $(".buy-details-btns").addClass("d-none")
+                        $('.app').addClass("d-none")
+                        $(".done-btn").removeClass("d-none")
+                    },
+                    failure: function (info) {
+                        toastr.error("حدث خطأ ما")
+                    }
+                });
+
+            })
+
+
+            $("#reject-rent").on("click", function () {
+                var id = $(this).siblings("span").text();
+
+                $.ajax({
+                    url: "/Estates/RejectRentRequest",
+                    type: "PUT",
+                    dataType: "json",
+                    data: {
+                        id: id
+                    },
+                    success: function (result) {
+                        window.location.href = "/Estates/MyRentRequests?estateId=@Model.EstateInfo.Id"
+                    },
+                    failure: function (info) {
+                        toastr.error("حدث خطأ ما")
+                    }
+                });
+
+            })
+        });
+
+
+        function ConfirmEstateIsSold() {
+            const priceRegex = new RegExp("^[1-9][0-9]*([\.][0-9][0-9]{0,2})?$|^$|^\s*$");
+            var finalPrice = $('#final-price').val();
+
+            if (finalPrice.trim() == '') {
+                toastr.error('يجب عليك ادخال السعر النهائي للعقار');
+                return;
+            }
+            if (!priceRegex.test(finalPrice)) {
+                toastr.error("من فضلك ادخل السعر النهائي للعقار بشكل صحيح");
+                return;
+            }
+
+
+            $.ajax({
+                url: "/Estates/ConfirmEstateIsSold",
+                type: "PUT",
+                dataType: "json",
+                data: {
+                    estateId: @Model.EstateInfo.Id,
+                    price: finalPrice,
+                    requestId: @(Model.PurchaseRequestDetails?.Id ?? 0)
+                                },
+                success: function (result) {
+                    window.location.href = "/Estates/MyEstateDetails/@Model.EstateInfo.Id?category=Sale"
+                    window.location.href = "/Estates/MyEstateDetails/@Model.EstateInfo.Id?category=Sale"
+                },
+                failure: function (info) {
+                    toastr.error("حدث خطأ ما")
+                }
+            });
+        }
+
+
+        function ConfirmEstateIsRented() {
+            $.ajax({
+                url: "/Estates/ConfirmEstateIsRented",
+                type: "PUT",
+                dataType: "json",
+                data: {
+                    estateId: @Model.EstateInfo.Id,
+                    requestId: @(Model.RentRequestDetails?.Id ?? 0)
+                },
+                success: function (result) {
+                    window.location.href = "/Estates/MyEstateDetails/@Model.EstateInfo.Id?category=Rent"
+                },
+                failure: function (info) {
+                    toastr.error("حدث خطأ ما")
+                }
+            });
+        }
+    </script>
+}

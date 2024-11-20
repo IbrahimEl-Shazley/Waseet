@@ -1,0 +1,27 @@
+﻿@model Wasit.Services.ViewModels.Home.DashBoardHomeModel
+@{
+    ViewData["Title"] = "الاحصائيات";
+}
+
+<div class="statistics">
+    <div class="statistics-box">
+        <p class="fw-bold fs-5">@Model.OwnersCount</p>
+        <p class="text">عدد ملاك العقارات</p>
+    </div>
+
+    <div class="statistics-box">
+        <p class="fw-bold fs-5">@Model.DelegatesCount</p>
+        <p class="text">عدد المناديب</p>
+    </div>
+
+    <div class="statistics-box">
+        <p class="fw-bold fs-5">@Model.BrokersCount</p>
+        <p class="text">عدد الوسطاء العقاريين</p>
+    </div>
+
+    <div class="statistics-box">
+        <p class="fw-bold fs-5">@Model.DevelopersCount</p>
+        <p class="text">عدد المطورين العقاريين</p>
+    </div>
+   
+</div>

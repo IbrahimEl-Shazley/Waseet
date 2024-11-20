@@ -1,0 +1,45 @@
+﻿@model Wasit.Services.ViewModels.Estates.MyEstates.MyRequestPageViewModel
+
+@{
+    ViewData["Title"] = "طلبات الايجار اليومي";
+}
+
+
+<div class="buy-section">
+    <div class="container text-center">
+        <h3 class="mb-5 font-b font-xl">طلبات الايجار اليومي</h3>
+    </div>
+</div>
+<div class="filter-nav-2 d-flex justify-content-center flex-row list-group">
+    <button class="list-group-item all now active" onclick="Reload(this, @Model.EstateId, '@DailyRentStatus.New')">جديدة</button>
+    <button class="list-group-item all now" onclick="Reload(this, @Model.EstateId,'@DailyRentStatus.Current')">حالية</button>
+    <button class="list-group-item all now" onclick="Reload(this, @Model.EstateId,'@DailyRentStatus.Finished')">منتهية</button>
+    <button class="list-group-item all now" onclick="Reload(this, @Model.EstateId,'@DailyRentStatus.Canceled')">ملغية</button>
+</div>
+<div class="container orders">
+    <div class="row">
+        @foreach (var item in Model.Requests)
+        {
+            <div class="col-lg-6 col-md-12 col-12">
+                <a href="/Estates/MyRequestDetails?requestId=@item.Id&category=@CategoryType.DailyRent" class="text-decoration-none">
+                    <div class="site-card p-3">
+                        <div class="d-flex justify-content-between header">
+                            <h4 class="text-dark">معلومات صاحب الطلب:</h4>
+                        </div>
+                        <div class="pt-3">
+                            <p class="m-0 dark-blue font-b">@item.UserName</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        function Reload(btn, estateId, status) {
+            window.location.href = `/Estates/MyDailyRentRequests?estateId=${estateId}&status=${status}`;
+        }
+    </script>
+}

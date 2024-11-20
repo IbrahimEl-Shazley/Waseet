@@ -1,0 +1,156 @@
+﻿@model Wasit.Services.ViewModels.City.CityViewModel
+
+@{
+    ViewData["Title"] = "المدن";
+}
+
+<div class="d-flex justify-content-end align-items-center mb-3">
+    <button class="main-btn" data-bs-toggle="modal" data-bs-target="#add-city">اضافة مدينة</i></button>
+</div>
+<table id="" class="data-table responsive nowrap" width="100%">
+    <thead>
+        <tr class="table-head">
+            <th class="text-center p-3">اسم المدينة باللغة العربية</th>
+            <th class="text-center p-3">اسم المدينة باللغة الانجليزية</th>
+            <th class="text-center">تاريخ الاضافة</th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var city in Model.Cities)
+        {
+            <tr class="table-row">
+                <td>@city.NameAr</td>
+                <td>@city.NameEn</td>
+                <td>@city.DateTime</td>
+                <td class="text-center">
+                    <div class="d-flex gap-3 justify-content-center">
+                        <a asp-action="Update" asp-route-id="@city.Id" class="edit-btn">تعديل</a>
+                        <button class="delete-btn" data-bs-toggle="modal" data-bs-target="#delete" onclick="PassId('@city.Id')">حذف المدينة</button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<!-- add city modal start -->
+<div class="modal fade" id="add-city" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b" id="filterLabel">اضافة مدينة</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label for="NameAr" class="input-label">اسم المدينة</label>
+                    <input type="text" name="NameAr" id="NameAr" class="site-input mb-2" placeholder="اسم المدينة باللغة العربية">
+                </div>
+                <div>
+                    <label for="NameEn" class="input-label">اسم المدينة</label>
+                    <input type="text" name="NameEn" id="NameEn" class="site-input mb-2" placeholder="اسم المدينة باللغة الانجليزية">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="secondary-btn w-100 py-3" onclick="CreateCity(this)">اضافة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- add city modal end -->
+<!--delete Modal Start -->
+<div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b" id="filterLabel">حذف المدينة</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="font-xs">هل تريد حذف المدينة ؟</p>
+            </div>
+            <div class="modal-footer">
+                <span hidden></span>
+                <button type="button" class="secondary-btn w-100 py-3" onclick="Remove(this)">تأكيد حذف المدينة </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--delete modal End-->
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+
+        $(document).ready(function () {
+            $(".dt-search input").attr("placeholder", `بحث باسم المدينه - تاريخ الاضاقه -`);
+        });
+        function PassId(id) {
+            $('#delete span').text(id);
+        }
+
+        function Remove(btn) {
+            $(btn).attr('disabled', true);
+            var id = $(btn).siblings('span').text();
+            $("#delete").modal('hide');
+            $.ajax({
+                url: "/Cities/Remove",
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (response) {
+                    debugger;
+                    if (response.success) {
+                        toastr.success(response.message)
+                        setInterval(function () { window.location.href = "/Cities/Index" }, 2000);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                }
+            });
+        }
+
+
+        function CreateCity(btn) {
+            $(btn).attr('disabled', true);
+            var nameAr = $('input#NameAr').val();
+            var nameEn = $('input#NameEn').val();
+            if (nameAr.trim() == "") {
+                toastr.warning('الرجاء ادخال اسم المدينة باللغة العربية');
+                $(btn).attr('disabled', false);
+                return;
+            }
+            if (nameEn.trim() == "") {
+                toastr.warning('الرجاء ادخال اسم المدينة باللغة الانجليزية');
+                $(btn).attr('disabled', false);
+                return;
+            }
+            $("#add-city").modal('hide');
+            $.ajax({
+                url: "/Cities/Create",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    NameAr: nameAr,
+                    NameEn: nameEn
+                },
+                success: function (result) {
+                    toastr.success('تم اضافة المدينة بنجاح');
+                    setInterval(function () { window.location.href = "/Cities/Index" }, 2000);
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                }
+            });
+        }
+    </script>
+}

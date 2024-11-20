@@ -1,0 +1,67 @@
+﻿@model Wasit.Services.ViewModels.Profits.AllPackages.CreateBrokerPackageViewModel
+
+@{
+    ViewData["Title"] = "اضافة باقة جديدة";
+}
+
+<form class="add-state" id="myForm" asp-action="CreateBrokerPackage" method="post">
+    <p class="p-color font-small mb-4 font-gray title">الرجاء املئ البيانات التالية</p>
+
+    <div class="col-12 mb-4">
+        <label asp-for="NameAr" class="input-label">اسم الباقة باللغة العربية</label>
+        <input asp-for="NameAr" placeholder="اسم الباقة باللغة العربية" class="site-input">
+        <span asp-validation-for="NameAr" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 mb-4">
+        <label asp-for="NameEn" class="input-label">اسم الباقة باللغة الانجليزية</label>
+        <input asp-for="NameEn" placeholder="اسم الباقة باللغة الانجليزية" class="site-input">
+        <span asp-validation-for="NameEn" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 mb-5">
+        <label asp-for="Price" class="input-label">سعر الباقة</label>
+        <input type="text" asp-for="Price" placeholder="سعر الباقة" class="site-input">
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 mb-5">
+        <label asp-for="DetailsAr" class="input-label">وصف الباقة باللغة العربية</label>
+        <textarea rows="5" asp-for="DetailsAr" placeholder="وصف الباقة باللغة العربية" class="site-input"></textarea>
+        <span asp-validation-for="DetailsAr" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 mb-5">
+        <label asp-for="DetailsEn" class="input-label">وصف الباقة باللغة الانجليزية</label>
+        <textarea rows="5" asp-for="DetailsEn" placeholder="وصف الباقة باللغة الانجليزية" class="site-input"></textarea>
+        <span asp-validation-for="DetailsEn" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 mb-5">
+        <label asp-for="Duration" class="input-label">مدة سريان الباقة (بالايام)</label>
+        <input type="text" asp-for="Duration" placeholder="مدة سريان الباقة" class="site-input">
+        <span asp-validation-for="Duration" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 mb-5">
+        <label asp-for="MaxUsageCount" class="input-label">عدد مرات الاستخدام</label>
+        <input type="text" asp-for="MaxUsageCount" placeholder="عدد مرات الاستخدام" class="site-input">
+        <span asp-validation-for="MaxUsageCount" class="text-danger"></span>
+    </div>
+
+    <button type="submit" id="submitBtn" class="secondary-btn w-100 py-3">اضافة</button>
+</form>
+
+
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function () {
+            var submitButton = document.getElementById('submitBtn');
+            submitButton.disabled = true;
+        });
+    </script>
+}

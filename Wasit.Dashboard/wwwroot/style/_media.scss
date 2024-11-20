@@ -1,0 +1,48 @@
+@import "variables";
+
+@media (max-width:$screen-xxs) {
+}
+@media (max-width:$screen-xs) {
+    .name{
+        display: none;
+        }
+        .position{
+            display: none;
+        }
+}
+
+@media (max-width:$screen-md) , (max-width:$screen-lg) {
+    .side-menu{
+        width: 300px;
+        position: absolute;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        padding: 0;
+    }
+    .main-container{
+        .main-nav{
+            border-radius: unset;
+        }
+    }
+    .input-wrapper{
+        width: 100% ;
+    }
+    .dt-search input{
+        width: 100% !important;
+    }
+}
+
+@media (max-width: $screen-lg) {
+    .main-container{
+        border-radius: unset;
+        margin-right: 0;
+        .main-nav{
+            padding: 0;
+            .left{
+                padding: 0;
+                .profile{
+                    padding: 0;
+                }
+            }
+        }
+    }
+}

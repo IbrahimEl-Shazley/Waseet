@@ -1,0 +1,68 @@
+﻿@model Wasit.Services.ViewModels.FixedPages.UpdateTermsAndConditionsViewModel
+@{
+    ViewData["Title"] = "الشروط والاحكام";
+}
+
+
+<form asp-action="Update" method="post">
+    <div class="mb-3">
+        <label asp-for="ConditionsOwnerAr" class="input-label">الشروط والاحكام للعميل باللغة العربية</label>
+        <textarea rows="10" asp-for="ConditionsOwnerAr" class="site-input"></textarea>
+        <span asp-validation-for="ConditionsOwnerAr" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CondtionsOwnerEn" class="input-label">الشروط والاحكام للعميل باللغة الانجليزية</label>
+        <textarea rows="10" asp-for="CondtionsOwnerEn" class="site-input" dir="ltr"></textarea>
+        <span asp-validation-for="CondtionsOwnerEn" class="text-danger"></span>
+    </div>
+    
+
+    <div class="mb-3">
+        <label asp-for="ConditionsDelegateAr" class="input-label">الشروط والاحكام للمندوب باللغة العربية</label>
+        <textarea rows="10" asp-for="ConditionsDelegateAr" class="site-input"></textarea>
+        <span asp-validation-for="ConditionsDelegateAr" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ConditionsDelegateEn" class="input-label">الشروط والاحكام للمندوب باللغة الانجليزية</label>
+        <textarea rows="10" asp-for="ConditionsDelegateEn" class="site-input" dir="ltr"></textarea>
+        <span asp-validation-for="ConditionsDelegateEn" class="text-danger"></span>
+    </div>
+    
+    
+    <div class="mb-3">
+        <label asp-for="ConditionsBrokerAr" class="input-label">الشروط والاحكام للوسيط باللغة العربية</label>
+        <textarea rows="10" asp-for="ConditionsBrokerAr" class="site-input"></textarea>
+        <span asp-validation-for="ConditionsBrokerAr" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ConditionsBrokerEn" class="input-label">الشروط والاحكام للوسيط باللغة الانجليزية</label>
+        <textarea rows="10" asp-for="ConditionsBrokerEn" class="site-input" dir="ltr"></textarea>
+        <span asp-validation-for="ConditionsBrokerEn" class="text-danger"></span>
+    </div>
+    
+    
+    <div class="mb-3">
+        <label asp-for="ConditionsDeveloperAr" class="input-label">الشروط والاحكام للمطور باللغة العربية</label>
+        <textarea rows="10" asp-for="ConditionsDeveloperAr" class="site-input"></textarea>
+        <span asp-validation-for="ConditionsDeveloperAr" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ConditionsDeveloperEn" class="input-label">الشروط والاحكام للمطور باللغة الانجليزية</label>
+        <textarea rows="10" asp-for="ConditionsDeveloperEn" class="site-input" dir="ltr"></textarea>
+        <span asp-validation-for="ConditionsDeveloperEn" class="text-danger"></span>
+    </div>
+
+
+    <button type="submit" class="secondary-btn m-auto w-75 py-3">تأكيد</button>
+</form>
+
+
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

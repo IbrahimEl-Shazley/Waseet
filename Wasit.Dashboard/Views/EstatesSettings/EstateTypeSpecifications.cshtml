@@ -1,0 +1,53 @@
+﻿@model Wasit.Services.ViewModels.EstateSettings.EstateTypeSpecificationsPageViewModel
+@{
+    ViewData["Title"] = "الخصائص";
+}
+<style>
+    .input-wrapper {
+        margin: unset;
+    }
+</style>
+
+<table class="table table-details">
+    <thead class="text-center">
+        <tr>
+            <th>اسم النوع باللغة العربية</th>
+            <th>الاسم باللغة الانجليزية</th>
+            <th>الاقسام</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.NameAr</td>
+            <td>@Model.NameEn</td>
+            <td>@Model.Categories</td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table table-features">
+    <thead class="text-center">
+        <tr>
+            <th>اسم الخاصية</th>
+            <th>الزامية الخاصية</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var spec in Model.Specifications)
+        {
+            <tr>
+                <td>@spec.Name</td>
+                <td>@spec.IsRequired</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            
+        });
+    </script>
+}

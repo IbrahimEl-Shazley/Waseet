@@ -1,0 +1,28 @@
+﻿@model Wasit.Services.ViewModels.FixedPages.UpdateAboutUsViewModel
+@{
+    ViewData["Title"] = "من نحن";
+}
+
+
+<form asp-action="Update" method="post">
+    <div class="mb-3">
+        <label asp-for="AboutUsAr" class="input-label">النص باللغة العربية</label>
+        <textarea rows="10" asp-for="AboutUsAr" class="site-input"></textarea>
+        <span asp-validation-for="AboutUsAr" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="AboutUsEn" class="input-label">النص باللغة الانجليزية</label>
+        <textarea rows="10" asp-for="AboutUsEn" class="site-input" dir="ltr"></textarea>
+        <span asp-validation-for="AboutUsEn" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="secondary-btn m-auto w-75 py-3">تأكيد</button>
+</form>
+
+
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

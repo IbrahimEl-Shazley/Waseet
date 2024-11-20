@@ -1,0 +1,53 @@
+[dir = ltr] {
+    .site-input:focus{
+        &::placeholder{
+            transform: translateX(-115%);
+        }
+    }
+    .side-menu {
+        left: 0;
+        right: unset;
+        @media (max-width: $screen-lg) {
+            padding: 0;
+        }
+    }
+    .toggle-side-menu{
+        transform: translateX(-100%) ;
+    }
+    .main-container {
+        margin-right: 0;
+        margin-left: 350px;
+        border-radius:30px 0 0 0;
+        @media (max-width: $screen-lg) {
+            margin: 0;
+            border-radius: 0;
+        }
+    }
+    .toggle-main-container{
+        margin-left: 0 ;
+    }
+    .main-nav{
+        border-radius: 30px 0 0 0;
+        .fa-indent{
+            rotate: 180deg;
+        }
+    }
+    .arrow , .gc-arrow{
+        rotate: 180deg;
+    }
+    .child-list ul .nav-item .c-link:hover , .gc-link:hover {
+        translate: 5px !important;
+    }
+    .tabs .nav-item .nav-link::before{
+        right: unset;
+        left: 0;
+    }
+    .notification-list .notification-item .delete {
+        margin-left: auto;
+        margin-right: unset;
+    }
+    .rs{
+        right: 10px;
+        left: unset;
+    }
+}

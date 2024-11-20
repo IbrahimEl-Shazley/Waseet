@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وسيط</title>
+    <link rel="stylesheet" href="~/plugins/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/plugins/fontawesome-free-6.5.2-web/css/all.min.css">
+    <link rel="stylesheet" href="~/style/style.css">
+</head>
+<body>
+    @RenderBody()
+
+    <script src="~/plugins/jQuery/jquery-3.7.1.min.js"></script>
+    <script src="~/plugins/fontawesome-free-6.5.2-web/js/all.min.js"></script>
+    <script src="~/plugins/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+</body>
+</html>

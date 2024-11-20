@@ -1,0 +1,198 @@
+﻿@model IEnumerable<Wasit.Services.ViewModels.FixedPages.QuestionsAndAnswersViewModel>
+
+@{
+    ViewData["Title"] = "الاسئلة والاجابات";
+}
+<style>
+    .input-wrapper {
+        margin: unset;
+    }
+</style>
+
+<div class="d-flex justify-content-end align-items-center mb-3">
+    <button class="main-btn" data-bs-toggle="modal" data-bs-target="#add-Question">اضافة سؤال</i></button>
+</div>
+<table id="" class="data-table responsive nowrap" width="100%">
+    <thead>
+        <tr class="table-head">
+            <th class="text-center p-3">السؤال</th>
+            <th class="text-center">الاجابة</th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-row">
+                <td>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <p>@item.QuestionAr</p>
+                    </div>
+                </td>
+                <td>@item.AnswerAr</td>
+                <td class="text-center">
+                    <div class="d-flex justify-content-center">
+                        <button class="edit-btn w-auto open-side" onclick="PassData('@item.QuestionAr', '@item.AnswerAr', '@item.QuestionEn', '@item.AnswerEn')">التفاصيل</button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<div class="modal fade" id="add-Question" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b" id="filterLabel">اضافة سؤال</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label for="QuestionAr" class="input-label"> السؤال بالعربيه</label>
+                    <input type="text" name="QuestionAr" id="QuestionAr" class="site-input mb-2" placeholder="السؤال بالعربيه">
+                </div>
+                <div>
+                    <label for="AnswerAr" class="input-label">الاجابه بالعربيه</label>
+                    <input type="text" name="AnswerAr" id="AnswerAr" class="site-input mb-2" placeholder="الاجابه بالعربيه">
+                </div>
+
+                <div>
+                    <label for="QuestionEn" class="input-label"> السؤال بالانجليزيه</label>
+                    <input type="text" name="QuestionEn" id="QuestionEn" class="site-input mb-2" placeholder="السؤال بالانجليزيه">
+                </div>
+                <div>
+                    <label for="AnswerEn" class="input-label">الاجابه بالانجليزيه</label>
+                    <input type="text" name="AnswerEn" id="AnswerEn" class="site-input mb-2" placeholder="الاجابه بالانجليزيه">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="secondary-btn w-100 py-3" onclick="CreateQuestion(this)">اضافة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="side-container">
+    <div class="side-details" style="min-width: 500px">
+        <div class="side-details-header d-flex mb-4">
+            <p class="m-auto font-b">التفاصيل</p>
+            <i class="fa-solid fa-xmark close-side cursor-p"></i>
+        </div>
+        <div class="side-disc mb-3">
+            <p class="font-b mb-2 font-xs">السؤال باللغة العربية</p>
+            <p class="p-2 border rounded-3 font-xs text-secondary" id="questionAr">
+
+            </p>
+        </div>
+
+        <div class="side-disc mb-3">
+            <p class="font-b mb-2 font-xs">الاجابة باللغة العربية</p>
+            <p class="p-2 border rounded-3 font-xs text-secondary" id="answerAr">
+
+            </p>
+        </div>
+
+        <div class="side-disc mb-3">
+            <p class="font-b mb-2 font-xs">السؤال باللغة الانجليزية</p>
+            <p class="p-2 border rounded-3 font-xs text-secondary" id="questionEn">
+
+            </p>
+        </div>
+
+        <div class="side-disc mb-3">
+            <p class="font-b mb-2 font-xs">الاجابة باللغة الانجليزية</p>
+            <p class="p-2 border rounded-3 font-xs text-secondary" id="answerEn">
+
+            </p>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".dt-search input").attr("placeholder", `بحث بالسؤال - الاجابه -  `);
+
+            $('.close-side , .side-container').click(function () {
+                $('.side-container').css('transform', 'translateX(-100%)');
+            })
+
+            $('.side-details').click(function (e) {
+                e.stopPropagation();
+            })
+
+            $('.open-side').click(function () {
+                $('.side-container').css('transform', 'translateX(0)');
+            })
+        });
+
+
+        function PassData(questionAr, answerAr, questionEn, answerEn) {
+            $('.side-details p#questionAr').text(questionAr);
+            $('.side-details p#answerAr').text(answerAr);
+            $('.side-details p#questionEn').text(questionEn);
+            $('.side-details p#answerEn').text(answerEn);
+        }
+
+        function CreateQuestion(btn) {
+            $(btn).attr('disabled', true);
+            var QuestionAr = $('input#QuestionAr').val();
+            var AnswerAr = $('input#AnswerAr').val();
+            var QuestionEn = $('input#QuestionEn').val();
+            var AnswerEn = $('input#AnswerEn').val();
+
+            if (QuestionAr.trim() == "") {
+                toastr.warning('الرجاء ادخال السؤال باللغة العربية');
+                $(btn).attr('disabled', false);
+                return;
+            }
+            if (AnswerAr.trim() == "") {
+                toastr.warning('الرجاء ادخال  الاجابه باللغة العربية');
+                $(btn).attr('disabled', false);
+                return;
+            }
+            if (QuestionEn.trim() == "") {
+                toastr.warning('الرجاء ادخال السؤال باللغة الانجليزيه');
+                $(btn).attr('disabled', false);
+                return;
+            }
+            if (AnswerEn.trim() == "") {
+                toastr.warning('الرجاء ادخال  الاجابه باللغة الانجليزيه');
+                $(btn).attr('disabled', false);
+                return;
+            }
+            $("#add-Question").modal('hide');
+            $.ajax({
+                url: "/Q_A/Create",
+                type: "POST",
+                dataType: "json",
+                data: {
+                  QuestionAr:QuestionAr,
+                  AnswerAr  :AnswerAr , 
+                  QuestionEn:QuestionEn,
+                  AnswerEn  :AnswerEn  
+                },
+                success: function (response) {
+                    debugger;
+                    if (response.success) {
+                        toastr.success(response.message)
+                        setInterval(function () { window.location.href = "/Q_A/Index" }, 2000);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+              
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                    $(btn).attr('disabled', false);
+
+                }
+            });
+        }
+
+    </script>
+}

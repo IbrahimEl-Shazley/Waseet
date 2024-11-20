@@ -1,0 +1,130 @@
+﻿@model Wasit.Services.ViewModels.EstateSettings.CreateSpecificationViewModel
+@{
+    ViewData["Title"] = "اضافة خاصية";
+}
+
+
+
+<form class="col-md-6" id="specification-form" enctype="multipart/form-data" method="post" asp-action="CreateSpecification">
+    <p class="p-color font-small mb-4 font-gray title">الرجاء املئ البيانات التالية</p>
+    <div>
+        <label for="" class="input-label">ايقونة الخاصية</label>
+        <div class="form-group custom-img-upload icon-upload">
+            <div class="profile-img-upload-2">
+                <input type="file" asp-for="Icon" accept="image/*" class="d-none upload-input">
+                <div class="img-preview img d-flex align-items-center flex-wrap">
+                    <label asp-for="Icon" class="multiple-upload w-100">
+                        <span class="dn-input"></span>
+                        <div class="up-img site-input d-flex justify-content-between cursor-p">
+                            <p class="font-xs font-gray"> إرفق ايقونة الخاصية هنا</p>
+                            <img src="~/imgs/noun_upload.png" alt="camera-img">
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <span asp-validation-for="Icon" class="text-danger"></span>
+        </div>
+        <input asp-for="Icon" id="IconImage" type="hidden" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NameAr" class="input-label">اسم الخاصية باللغة العربية</label>
+        <input type="text" asp-for="NameAr" placeholder="اسم الخاصية باللغة العربية" class="site-input">
+        <span asp-validation-for="NameAr" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NameEn" class="input-label">اسم الخاصية باللغة الانجليزية</label>
+        <input type="text" asp-for="NameEn" placeholder="اسم الخاصية باللغة الانجليزية" class="site-input">
+        <span asp-validation-for="NameEn" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <div class="mb-4">
+            <label asp-for="Type" class="input-label">نوع الخاصية</label>
+
+            <select class="select2 service-select" name="Type" id="Type" asp-for=Type asp-items="@ViewBag.SpecificationTypes">
+                <option selected hidden disabled>اختر نوع الخاصية</option>
+            </select>
+            <span asp-validation-for="Type" class="text-danger"></span>
+            <div class="services-types d-flex flex-wrap">
+            </div>
+        </div>
+    </div>
+    <a onclick="SubmitData(this)" class="secondary-btn w-100 py-3">حفظ</a>
+</form>
+
+
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $("#icon-upload").on("click", function () {
+            $("#upload-input").click();
+        })
+
+
+        function SubmitData(btn) {
+            $(btn).attr('disabled', true);
+
+            var icon = $(":file")[$(":file").length - 1].files[0];
+            if (icon == undefined) {
+                toastr.error('يجب عليك اختيار ايقونة');
+                $(btn).attr('disabled', false);
+
+                return;
+            }
+
+            var nameAr = $("#NameAr").val();
+            if (nameAr.trim() == "") {
+                toastr.error('يجب عليك ادخال اسم الخاصية باللغة العربية');
+                $(btn).attr('disabled', false);
+
+                return;
+            }
+
+            var nameEn = $("#NameEn").val();
+            if (nameEn.trim() == "") {
+                toastr.error('يجب عليك ادخال اسم الخاصية باللغة الانجليزية');
+                $(btn).attr('disabled', false);
+
+                return;
+            }
+
+            debugger;
+            var type = $("#Type").val();
+            if (type == null) {
+                toastr.error('يجب عليك اختيار نوع الخاصية');
+                $(btn).attr('disabled', false);
+
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append('Icon', icon);
+            formData.append('NameAr', nameAr);
+            formData.append('NameEn', nameEn);
+            formData.append('Type', type);
+
+            $.ajax({
+                url: "/EstatesSettings/CreateSpecification",
+                type: "POST",
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (result) {
+                    toastr.success('تم اضافة الخاصية بنجاح');
+                    setInterval(function () { window.location.href = "/EstatesSettings/Specifications" }, 2000);
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                    $(btn).attr('disabled', false);
+
+                }
+            });
+        }
+
+    </script>
+}

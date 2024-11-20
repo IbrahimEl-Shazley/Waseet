@@ -1,0 +1,332 @@
+﻿@using Wasit.Core.Helpers.General
+@using Wasit.Services.ViewModels.Shared
+@model Wasit.Services.ViewModels.EstateSettings.UpdateEstateTypeViewModel
+@{
+    ViewData["Title"] = "تعديل نوع عقار";
+}
+
+<div class="add-state" asp-action="Create" method="post">
+    <p class="p-color font-small mb-4 font-gray title">الرجاء املئ البيانات التالية</p>
+
+    <div class="form-group">
+        <label asp-for="NameAr" class="input-label">اسم النوع باللغة العربية</label>
+        <input asp-for="NameAr" placeholder="اسم النوع باللغة العربية" class="site-input">
+        <span asp-validation-for="NameAr" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NameEn" class="input-label">اسم النوع باللغة الانجليزية</label>
+        <input asp-for="NameEn" placeholder="اسم النوع باللغة الانجليزية" class="site-input">
+        <span asp-validation-for="NameEn" class="text-danger"></span>
+    </div>
+
+    <div class="mb-4">
+        <label for="Categories" class="input-label">القسم</label>
+        <select name="Categories" id="Categories" class="select2 service-select" @* multiple *@>
+            @* <option selected hidden disabled>اختر القسم</option> *@
+            <option value="@CategoryType.Sale">شراء</option>
+            <option value="@CategoryType.Rent">ايجار</option>
+            <option value="@CategoryType.Entertainment">ايجار ترفيهي</option>
+            <option value="@CategoryType.DailyRent">ايجار يومي</option>
+        </select>
+
+
+
+
+        <div class="services-types d-flex flex-wrap">
+            @foreach (var item in Model.Categories)
+            {
+                <div class="d-flex align-items-center justify-content-between gap-3 service">
+                    <p>@(EnumHelper.GetEnumDisplayName<CategoryType>(item))</p>
+                    <input hidden value="@Enum.GetName(typeof(CategoryType), item)">
+                    <i class="fa-solid fa-remove delete" onclick="removeElement(this)"></i>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="mb-4 row">
+        <div class="col-5">
+            <label class="input-label">الخاصية</label>
+            <select class="select2 option-select" id="Specs" asp-items="@ViewBag.Specifications">
+                <option value="0" hidden disabled>اختر الخاصية</option>
+            </select>
+            <span asp-validation-for="SelectedSpecs" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label class="input-label" for="req">الزامية الخاصية</label>
+            <div class="form-check form-switch  notifi-switch d-flex">
+                <input class="form-check-input switch mt-3" type="checkbox">
+            </div>
+        </div>
+        <div class="col justify-content-end align-items-end d-flex">
+            <button class="main-btn p-2 confirm">
+                <i class="fa-solid fa-check font-xl"></i>
+            </button>
+        </div>
+        <div class="options">
+            @foreach (var item in Model.Specifications)
+            {
+                <div class="option my-3 chosen-option">
+                    <div>
+                        <p class="font-xs text-secondary">اسم الخاصية : <span class="dark-blue font-b">@item.Name</span></p>
+                    </div>
+                    <div>
+                        <p class="font-xs text-secondary">
+                            الزامية الخاصية :
+                            @if (item.IsRequired)
+                            {
+                                <span class="dark-blue font-b is-required">
+                                    الزامية
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="dark-blue font-b is-required">
+                                    غير الزامية
+                                </span>
+                            }
+                        </p>
+                    </div>
+                    <div>
+                        <span class="prop-id" hidden>@item.Id</span>
+
+                        <i class="fa-regular fa-trash-can text-danger font-lg cursor-p" onclick="removeSpec(this)"></i>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <button type="button" onclick="SubmitData(this)" class="secondary-btn w-100 py-3">حفظ</button>
+</div>
+@* </div> *@
+
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+
+    <script>
+        var enumMapping = {
+            "Sale": 1,
+            "Rent": 2,
+            "DailyRent": 3,
+            "Entertainment": 4
+        };
+        $(document).ready(function () {
+            debugger;
+            var disabledValues = @Html.Raw(Json.Serialize(Model.Categories));
+            var specValues = @Html.Raw(Json.Serialize(Model.Specifications));
+            debugger
+            var specids = $.map(specValues, function (item) {
+                return item.id;
+            });
+
+
+            $(".service-select").on("change", function () {
+                var selectedOption = $(this).find('option:selected');
+
+                if (!selectedOption.val()) {
+                    return;
+                }
+
+                console.log(selectedOption.val());
+
+                $('.services-types').append(`
+                                        <div class="d-flex align-items-center justify-content-between gap-3 service">
+                                            <p>${$(selectedOption).text()}</p>
+                                            <input hidden value="${$(selectedOption).val()}">
+                                                    <i class="fa-solid fa-remove delete" onclick="removeElement(this)"></i>
+                                        </div>`
+                );
+
+                $(selectedOption).attr('disabled', true);
+
+                // $(document).on("click", ".service .delete", function () {
+                //     $(this).parent().remove();
+
+                //     $(".service-select option[value='" + $(this).parent().find('input').val() + "']").removeAttr('disabled');
+                // });
+
+
+
+            });
+
+            $('.option-select').on("change", function () {
+                var selectedElement = $(this).find('option:selected');
+
+                if (!selectedElement.val()) {
+                    return;
+                }
+
+                var selectVal = selectedElement.val();
+                var selectText = selectedElement.text();
+
+                $(".confirm").off("click").one("click", function () {
+                    var spec = $(".form-switch .switch").prop('checked') ? "الزاميه" : "غير الزاميه";
+                    $(".options").append(`
+                                            <div class="option my-3 chosen-option">
+                                                <div>
+                                                    <p class="font-xs text-secondary">اسم الخاصية : <span class="dark-blue font-b">${selectText}</span></p>
+                                                </div>
+                                                <div>
+                                                    <p class="font-xs text-secondary">الزامية الخاصية : <span class="dark-blue font-b is-required">${spec}</span></p>
+                                                </div>
+                                                <div>
+                                                   <span class="prop-id" hidden>${selectVal}</span>
+                                                  <i class="fa-regular fa-trash-can text-danger font-lg cursor-p" onclick="removeSpec(this)"></i>
+                                          </div>
+                                            </div>
+                                        `);
+
+                    // $(document).on("click", ".fa-trash-can", function () {
+                    //     $(this).closest('.chosen-option').remove();
+                    // });
+
+                    $(selectedElement).attr('disabled', true);
+
+                });
+            });
+
+
+
+
+
+
+            $('#Categories option').each(function () {
+                debugger;
+                var optionText = $(this).val();
+                var enumValue = enumMapping[optionText];
+
+                // Check if the value exists in the list
+                if (disabledValues.includes(enumValue)) {
+                    $(this).prop('disabled', true); // Disable the option
+                }
+            });
+
+            $('#Specs option').each(function () {
+                debugger;
+                var option =parseInt($(this).val());
+
+
+                if (specids.includes(option)) {
+                    $(this).prop('disabled', true);
+                }
+
+            });
+
+        });
+        function removeElement(e) {
+            $(e).parent().remove();
+
+            $(".service-select option[value='" + $(e).parent().find('input').val() + "']").removeAttr('disabled');
+        }
+
+        function removeSpec(e) {
+            debugger;
+            $(e).closest('.chosen-option').remove();
+            $(".option-select option[value = '" + $(e).parent().find('.prop-id').text() + "']").removeAttr('disabled');
+
+        }
+
+        function SubmitData(btn) {
+            debugger;
+            $(btn).attr('disabled', true);
+
+            var id = @Html.Raw(Json.Serialize(Model.Id));
+            var nameAr = $('#NameAr').val();
+            var nameEn = $('#NameEn').val();
+            var categories = [];
+            var specs = [];
+
+            if (nameAr.trim() == '') {
+                toastr.error('اسم النوع باللغة العربية مطلوب');
+                $(btn).attr('disabled', false);
+
+                return;
+            }
+
+            if (nameEn.trim() == '') {
+                toastr.error('اسم النوع باللغة الانجليزية مطلوب');
+                $(btn).attr('disabled', false);
+
+                return;
+            }
+
+            $('.service').each(function () {
+                var enumNumber = enumMapping[$(this).find('input').val()];
+
+                // var categoryEnum = $(this).find('input').val();
+                categories.push(enumNumber);
+            });
+
+            if (categories == null) {
+                toastr.error('القسم مطلوب');
+                $(btn).attr('disabled', false);
+
+                return;
+            }
+
+
+            $('.chosen-option').each(function () {
+                var propertyId = $(this).find('span.prop-id').text();
+                var propertyMandatory = false;
+                if ($(this).find('span.is-required').text().trim() == 'الزامية') {
+                    propertyMandatory = true;
+                }
+
+                specs.push({
+                    Id: propertyId,
+                    IsRequired: propertyMandatory
+                });
+            });
+
+            if (specs == []) {
+                toastr.error('يرجي اختيار خاصية واحدة علي الاقل');
+                $(btn).attr('disabled', false);
+
+                return;
+            }
+
+            var UpdateEstateTypeViewModel = {
+                NameAr: nameAr,
+                NameEn: nameEn,
+                Categories: categories,
+                Specifications: specs
+            }
+
+            $.ajax({
+                url: "/EstatesSettings/Update",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    Id: id,
+                    model: UpdateEstateTypeViewModel
+                },
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success('تم الحفظ بنجاح');
+                        setInterval(function () { window.location.href = "/EstatesSettings/Types" }, 2000);
+                    }
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                    $(btn).attr('disabled', false);
+
+                }
+            });
+        }
+
+
+        $(".form-switch .switch").click(function () {
+            const isChecked = $(this).prop('checked');
+
+            if (isChecked) {
+                $(this).attr('checked', true);
+            } else {
+                $(this).removeAttr('checked');
+            }
+        });
+
+    </script>
+}

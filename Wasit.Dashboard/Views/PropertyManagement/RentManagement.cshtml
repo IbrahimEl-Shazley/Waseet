@@ -1,0 +1,120 @@
+﻿@model IEnumerable<Wasit.Services.ViewModels.PropertyManagement.RentManagement.RentManagementRequestViewModel>
+@{
+    ViewData["Title"] = "ادراة الايجارات";
+}
+
+<table id="" class="data-table responsive nowrap" width="100%">
+    <thead>
+        <tr class="table-head">
+                <th class="text-center p-3">اسم العميل</th>
+                <th class="text-center">بيانات العقار</th>
+                <th class="text-center">مبلغ العقار</th>
+                <th class="text-center"></th>
+                <th class="text-center">الحالة</th>
+            </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-row">
+                <td>@item.UserName</td>
+                <td>@item.PropertyName</td>
+                <td>@item.UniqueNumber</td>
+                <td>
+                    <div class="d-flex justify-content-center">
+                        <a asp-controller="PropertyManagement" asp-action="RentManagementRequestDetails" asp-route-id="@item.Id" class="edit-btn w-auto">التفاصيل</a>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <div class="d-flex gap-3 justify-content-center">
+                        @if (item.IsPending)
+                        {
+                            <a onclick="Accept(@item.Id,this)" class="accept-btn">قبول</a>
+                            <button class="delete-btn" data-bs-toggle="modal" data-bs-target="#delete" onclick="PassId('@item.Id')">رفض</button>
+                        }
+                        else
+                        {
+                            <span class="text-success">@item.Status</span>
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<!--delete Modal Start -->
+    <div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-bold font-b" id="filterLabel">رفض الطلب</h5>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="font-xs">هل تريد رفض الطلب ؟</p>
+                </div>
+                <div class="modal-footer">
+                    <span hidden ></span>
+                    <button type="button" class="secondary-btn w-100 py-3" onclick="Reject(this)" >تأكيد الرفض </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--delete modal End-->
+
+
+@section scripts {
+    <script>
+
+
+        $(document).ready(function () {
+            $(".dt-search input").attr("placeholder", `بحث باسم العميل - بيانات العقار -  مبلغ العقار `);
+        });
+
+        function PassId(requestId) {
+            $('#delete span').text(requestId);
+        }
+
+        function Accept(requestId,btn) {
+            $(btn).attr('disabled', true);
+            $.ajax({
+                url: "/PropertyManagement/AcceptRentManagementRequest",
+                type: "PUT",
+                dataType: "json",
+                data: {
+                    id: requestId
+                },
+                success: function (result) {
+                    toastr.success('تم قبول الطلب بنجاح');
+                    setInterval(function () { window.location.href = "/PropertyManagement/RentManagement" }, 2000);
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                }
+            });
+          }
+
+        function Reject(btn) {
+            $(btn).attr('disabled', true);
+            var requestId = $(btn).siblings('span').text();
+            $("#delete").modal('hide');
+            $.ajax({
+                url: "/PropertyManagement/RejectRentManagementRequest",
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    id: requestId
+                },
+                success: function (result) {
+                    toastr.success('تم رفض الطلب بنجاح');
+                    setInterval(function () { window.location.href = "/PropertyManagement/RentManagement" }, 2000);
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                }
+            });
+          }
+    </script>
+}

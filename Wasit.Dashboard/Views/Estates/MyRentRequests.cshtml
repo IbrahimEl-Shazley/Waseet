@@ -1,0 +1,31 @@
+﻿@model Wasit.Services.ViewModels.Estates.MyEstates.MyRequestPageViewModel
+
+@{
+    ViewData["Title"] = "طلبات الايجار";
+}
+
+<div class="buy-section">
+    <div class="container text-center">
+        <h3 class="mb-5 font-b font-xl">طلبات الايجار</h3>
+    </div>
+</div>
+<div class="container orders">
+    <div class="row">
+        @foreach (var item in Model.Requests)
+        {
+            <div class="col-lg-6 col-md-12 col-12">
+                <a href="/Estates/MyRequestDetails?requestId=@item.Id&category=@CategoryType.Rent&requestType=@((int)RentRequestType.RentRequest)" class="text-decoration-none">
+                    <div class="site-card p-3">
+                        <div class="d-flex justify-content-between header">
+                            <h4 class="text-dark"> معلومات صاحب الطلب:</h4>
+                            <p class="dark-blue font-b">@item.Status</p>
+                        </div>
+                        <div class="pt-3">
+                            <p class="m-0 dark-blue font-b">@item.UserName</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>

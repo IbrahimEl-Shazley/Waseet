@@ -1,0 +1,165 @@
+﻿@model IEnumerable<Wasit.Services.ViewModels.Profits.ProfitViewModel>
+
+@{
+    ViewData["Title"] = "الربح من المشروع";
+}
+
+<div class="container">
+    <h5 class="font-b text-center mb-4 font-md">تحديد الرسوم</h5>
+    <div class="fees row mb-5">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 ">
+                <div class="fee edit-fee">
+                    <div>
+                        <p class=" font-xxs mb-2">@item.Name</p>
+                        <div class="d-flex align-items-center">
+                            @if (item.DisplayType == ProfitType.Value)
+                            {
+                                <img src="~/imgs/money-bag.png" alt="icon" class="ms-2">
+                                <p class="font-xxs">@item.Cost <span>ريال</span></p>
+                            }
+                            else
+                            {
+                                <img src="~/imgs/tax.png" alt="icon" class="ms-2">
+                                <p class="font-xxs">@item.Cost <span>%</span></p>
+                            }
+                        </div>
+                    </div>
+                    <div>
+                        <button class="main-btn font-xxxs" data-bs-toggle="modal" data-bs-target="#fees" onclick="PassData('@item.Name', '@item.ServiceType', '@item.DisplayType', @item.Cost)">تعديل</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <h5 class="font-b text-center mb-4 font-md">اضافة باقات</h5>
+    <div class="row quotes">
+        <div class="col-lg-3 col-md-4 col-sm-6 ">
+            <div class="quote">
+                <div>
+                    <p class="font-b font-xxs mb-2">باقات الوسطاء</p>
+                </div>
+                <div>
+                    <a class="main-btn font-xxxs" asp-action="BrokersPackages">عرض</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6 ">
+            <div class="quote">
+                <div>
+                    <p class="font-b font-xxs mb-2">باقات التسويم</p>
+                </div>
+                <div>
+                    <a class="main-btn font-xxxs" asp-action="AddPriceToEstatePackages">عرض</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6 ">
+            <div class="quote">
+                <div>
+                    <p class="font-b font-xxs mb-2">باقات المطورين</p>
+                </div>
+                <div>
+                    <a class="main-btn font-xxxs" asp-action="DeveloperPackages">عرض</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-4 col-sm-6 ">
+            <div class="quote">
+                <div>
+                    <p class="font-b font-xxs mb-2">باقات الخدمات العقارية</p>
+                </div>
+                <div>
+                    <a class="main-btn font-xxxs" asp-action="ServicesPackages">عرض</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade " id="fees">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-center flex-column align-items-center">
+                <h5 class="font-b font-md mb-2"> العقار</h5>
+                <p class="text-secondary font-xxs"></p>
+            </div>
+            <div class="modal-body">
+                <label for="service-fee" class="input-label">القيمة</label>
+                <input type="number" name="service-fee" id="service-fee" class="site-input" placeholder="القيمة">
+            </div>
+            <div class="modal-footer">
+                <span id="d-type" hidden></span>
+                <span id="s-type" hidden></span>
+                <button class="secondary-btn w-100 py-3" onclick="Update(this)">تأكيد</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script>
+        function PassData(name, type, displayType, cost) {
+            $('#fees h5').text(name);
+            $('#fees span#s-type').text(type);
+            $('#fees span#d-type').text(displayType);
+            $('#fees input').val(cost);
+        }
+
+        function Update(btn) {
+            debugger;
+            $(btn).attr('disabled', true);
+
+            var displayType = $(btn).siblings('span#d-type').text();
+            var type = $(btn).siblings('span#s-type').text();
+            var value = $('#service-fee').val();
+
+            if (value == "") {
+                toastr.error('القيمة مطلوبة');
+                return;
+            }
+
+            if (displayType == '@ProfitType.Percentage') {
+
+                if (value < 0 || value > 100) {
+                    toastr.error('القيمة غير صالحة');
+                    return;
+                }
+            }
+           
+            // $(btn).attr('disabled', true);
+
+            $("#fees").modal('hide');
+            $.ajax({
+                url: "/Finance/Update",
+                type: "PUT",
+                dataType: "json",
+                data: {
+                    type: type,
+                    value: value
+                },
+                success: function (result) {
+                    debugger
+                    toastr.success('تم التعديل بنجاح');
+                    setInterval(function () { window.location.href = "/Finance/Profits" }, 2000);
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                    $(btn).attr('disabled', false);
+
+                }
+            });
+        }
+    </script>
+}
+

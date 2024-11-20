@@ -1,0 +1,132 @@
+﻿@model IEnumerable<Wasit.Services.ViewModels.Estates.MyEstates.SpecificationFormItemViewModel>
+
+@{
+    ViewData["Title"] = "استكمال تعديل بيانات االعقار";
+}
+
+
+<div class="add-state">
+    <p class="p-color font-small mb-4 font-gray title">الرجاء املئ البيانات التالية</p>
+
+    @foreach (var item in Model)
+    {
+        <div class="form-group">
+            <label asp-for="@item.Name" class="input-label">@item.Label</label>
+            <span hidden>@item.EstateTypeSpecificationId</span>
+            @if (item.Type != SpecificationType.Boolean)
+            {
+                <input type="text" id="@item.Name" value="@item.Value" name="@item.Name" placeholder="@item.Label" class="site-input @item.Type @item.IsRequired">
+            }
+            else
+            {
+                <select asp-for="@item.Name" class="select2 mb-4 @item.Type @item.IsRequired">
+                    <option value="" selected hidden disabled>@item.Label</option>
+                    @if (item.Value == "true")
+                    {
+                        <option selected value="true">نعم</option>
+                        <option value="false">لا</option>
+                    }
+                    else
+                    {
+                        <option value="true">نعم</option>
+                        <option selected value="false">لا</option>
+                    }
+                </select>
+            }
+        </div>
+    }
+    <a onclick="SubmitData(this)" id="submit-btn" class="secondary-btn w-100 py-3">تعديل</a>
+</div>
+
+
+@section scripts {
+    <script>
+        function SubmitData(btn) {
+            $(btn).attr('disabled', true);
+
+            const DoubleRegEx = new RegExp("^[1-9][0-9]*([\.][0-9][0-9]{0,2})?$|^$|^\s*$");
+            const IntegerRegEx = new RegExp("^[1-9][0-9]*$");
+
+            var arr = [];
+
+            $('input').each(function (i) {
+                var inputId = $(this).siblings("span").text();
+                var inputValue = $(this).val();
+                var label = $(this).attr("placeholder");
+
+                if ($(this).hasClass("True") && inputValue.trim() == '') {
+                    toastr.error(`الحقل '${label}' مطلوب`);
+                    $(btn).attr('disabled', false);
+
+                    return;
+                }
+
+                if ($(this).hasClass("Integer") && !IntegerRegEx.test(inputValue) && inputValue.trim() != '') {
+                    toastr.error(`الحقل '${label}' يجب ان يكون رقم صحيح`);
+                    $(btn).attr('disabled', false);
+
+                    return;
+                }
+
+                if ($(this).hasClass("Double") && !DoubleRegEx.test(inputValue) && inputValue.trim() != '') {
+                    toastr.error(`الحقل '${label}' يجب ان يكون رقم صحيح او عشري`);
+                    $(btn).attr('disabled', false);
+
+                    return;
+                }
+
+                arr.push({ Id: inputId, Value: inputValue });
+            });
+
+            if ($('select').length > 1) {
+                $('select').each(function (i) {
+                    var selectedId = $(this).siblings("span").text();
+                    var selectedValue = $(this).val();
+                    var opt = $('this').children()[0];
+                    var label = opt.text;
+
+                    if ($(this).hasClass("True") && selectedValue == null) {
+                        toastr.error(`الحقل '${label}' مطلوب`);
+                        return;
+                    }
+
+                    arr.push({ Id: selectedId, Value: selectedValue });
+                });
+            }
+
+            debugger;
+            var model = {
+                EstateId: @ViewBag.EstateId,
+                Category: '@ViewBag.Category',
+                Specs: arr
+            }
+
+            if (model.Specs.length > 0) {
+                // $('#submit-btn').prop('disabled', true);
+                $.ajax({
+                    url: "/Estates/ContinueEditMoreSpecs",
+                    type: "POST",
+                    data: model,
+                    success: function (result) {
+                        if (result.isSuccess) {
+                            toastr.success(result.message)
+                            setInterval(function () { window.location.href = `/Estates/MyEstateDetails?id=${model.EstateId}&category=${model.Category}` }, 2000);
+                        }
+                        else {
+                            // $('#submit-btn').prop('disabled', false);
+                            $(btn).attr('disabled', false);
+
+                            toastr.error(result.message)
+                        }
+                    },
+                    failure: function (info) {
+                        toastr.error('حدث خطأ ما');
+                        $(btn).attr('disabled', false);
+
+                    }
+                });
+            }
+
+        }
+    </script>
+}

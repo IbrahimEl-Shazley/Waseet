@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Wasit.Services</name>
+    </assembly>
+    <members>
+        <member name="P:Wasit.Services.DTOs.Schema.SEC.ResetPasswordDTO.PhoneNumber">
+            <summary>
+            for title of notification
+            </summary>
+        </member>
+    </members>
+</doc>

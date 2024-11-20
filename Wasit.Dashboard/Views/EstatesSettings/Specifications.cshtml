@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Wasit.Services.ViewModels.EstateSettings.SpecificationViewModel>
+@{
+    ViewData["Title"] = "الخصائص";
+}
+
+<style>
+    .input-wrapper {
+        margin: unset;
+    }
+</style>
+
+<div class="add d-flex justify-content-end float-left mb-2">
+    <a class="main-btn w-auto" asp-controller="EstatesSettings" asp-action="CreateSpecification">اضافة خاصية</a>
+</div>
+<table id="" class="data-table responsive nowrap" width="100%">
+    <thead>
+        <tr class="table-head">
+            <th class="text-center">ايقونة الخاصية</th>
+            <th class="text-center p-3">اسم الخاصية باللغة العربية</th>
+            <th class="text-center"> اسم الخاصية باللغة الانجليزية</th>
+            <th class="text-center">نوع الخاصية</th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-row">
+                <td><img src="@item.Icon" alt="feature-icon" class="feature-icon"></td>
+                <td>@item.NameAr </td>
+                <td>@item.NameEn</td>
+                <td>@item.Type</td>
+                <td class="text-center">
+                    <div class="d-flex gap-3 justify-content-center">
+                        <a asp-controller="EstatesSettings" asp-action="EditSpecification" asp-route-id="@item.Id" class="edit-btn">تعديل</a>
+                        <button class="delete-btn" data-bs-toggle="modal" data-bs-target="#delete" onclick="PassId('@item.Id')">حذف</button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<!--delete Modal Start -->
+<div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b" id="filterLabel">حذف خاصية العقار</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="font-xs">هل تريد حذف خاصية العقار</p>
+            </div>
+            <div class="modal-footer">
+                <span hidden></span>
+                <button type="button" class="secondary-btn w-100 py-3" onclick="Remove(this)">تأكيد حذف خاصية العقار</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--delete modal End-->
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".dt-search input").attr("placeholder", `بحث باسم الخاصية - نوع الخاصية`);
+            $(".dt-search input").wrap("<div class='input-wrapper'></div>");
+            // $('.filter-icon').on('shown.bs.modal', function (e) {
+            //     $('body').removeClass('modal-open');
+            //     $('.main-section').addClass('modal-open');
+            // })
+        });
+
+        function PassId(specificationId) {
+            $('#delete span').text(specificationId);
+        }
+
+        function Remove(btn) {
+            $(btn).attr('disabled', true);
+            var specificationId = $(btn).siblings('span').text();
+            $("#delete").modal('hide');
+            $.ajax({
+                url: "/EstatesSettings/RemoveSpecification",
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    id: specificationId
+                },
+                success: function (result) {
+                    toastr.success('تم حذف نوع العقار بنجاح');
+                    setInterval(function () { window.location.href = "/EstatesSettings/Specifications" }, 2000);
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                }
+            });
+        }
+    </script>
+}

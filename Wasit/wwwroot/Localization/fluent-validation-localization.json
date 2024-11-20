@@ -1,0 +1,82 @@
+[
+  {
+    "Key": "Required",
+    "valueAr": "الحقل '{0}' مطلوب",
+    "valueEn": "The field '{0}' is required"
+  },
+  {
+    "Key": "MinLength",
+    "valueAr": "الحقل '{0}' يجب أن لا يقل عن '{1}' أحرف",
+    "valueEn": "The field {0} must be a string or array type with a minimum length of '{1}'"
+  },
+  {
+    "Key": "MaxLength",
+    "valueAr": "الحقل '{0}' يجب أن لا يزيد عن '{1}' أحرف",
+    "valueEn": "The field {0} must be a string or array type with a maximum length of '{1}'"
+  },
+  {
+    "Key": "Email",
+    "valueAr": "الحقل '{0}' ليس بريد الكترونى صحيح",
+    "valueEn": "The field '{0}' is not a valid email address"
+  },
+  {
+    "Key": "GreaterThan",
+    "valueAr": "الحقل '{0}' يجب أن يكون أكير من 0",
+    "valueEn": "The field '{0}' must be greater than '0'"
+  },
+  {
+    "Key": "ExclusiveBetween",
+    "valueAr": "الحقل '{0}' يجب أن يكون بين '{1}' و '{2}'",
+    "valueEn": "The field '{0}' 'Postal Code' must be between '{1}' and '{2}'"
+  },
+  {
+    "Key": "PhoneNumber",
+    "valueAr": "رقم الجوال غير صحيح",
+    "valueEn": "Phone number is not valid "
+  },
+  {
+    "Key": "IdentityNumber",
+    "valueAr": "رقم الهوية الوطنية غير صحيح",
+    "valueEn": "Identity number is not valid"
+  },
+  {
+    "Key": "IBAN",
+    "valueAr": "يرجي كتابة رقم الآي بان بصيغة صحيحة",
+    "valueEn": "IBAN is not valid"
+  },
+  {
+    "Key": "BankAccountNo",
+    "valueAr": "يرجي كتابة رقم حساب بنكي صحيح",
+    "valueEn": "Bank account number is not valid"
+  },
+  {
+    "Key": "CommercialNo",
+    "valueAr": "يرجي كتابة رقم السجل التجاري بصيغة صحيحة",
+    "valueEn": "Commercial number is not valid"
+  },
+  {
+    "Key": "Status4",
+    "valueAr": "يرجي ادخال حالة صحيحة للطلب (1 - 2 - 3 - 4)",
+    "valueEn": "Status must be one of (1 - 2 - 3 - 4)"
+  },
+  {
+    "Key": "Status3",
+    "valueAr": "يرجي ادخال حالة صحيحة للطلب (1 - 2 - 3)",
+    "valueEn": "Status must be one of (1 - 2 - 3)"
+  },
+  {
+    "Key": "Status2",
+    "valueAr": "يرجي ادخال حالة صحيحة للطلب (1 - 2)",
+    "valueEn": "Status must be one of (1 - 2)"
+  },
+  {
+    "Key": "CategoryThreeAndFour",
+    "valueAr": "يرجي ادخال نوع القسم ترفيهي او ايجار يومي",
+    "valueEn": "Please enter the category type: entertainment or daily rent"
+  },
+  {
+    "Key": "ConfirmNewPassowrd",
+    "valueAr": "كلمتا المرور الجديدة غير متطابقة",
+    "valueEn": "New passowrds don't match"
+  }
+]

@@ -1,0 +1,156 @@
+﻿@model IEnumerable<Wasit.Services.ViewModels.Profits.AllPackages.PackageViewModel>
+@{
+    ViewData["Title"] = "باقات الوسطاء";
+}
+
+<style>
+    .input-wrapper {
+        margin: unset;
+    }
+</style>
+<div class="d-flex justify-content-end">
+    <a asp-action="CreateBrokerPackage" class="main-btn mb-3"> اضافة باقة</a>
+</div>
+<table id="" class="data-table responsive nowrap" width="100%">
+    <thead>
+        <tr class="table-head">
+            <th class="text-center p-3">اسم الباقة</th>
+            <th class="text-center">سعر الباقة</th>
+            <th class="text-center">مدة سريان الباقة</th>
+            <th class="text-center">عدد مرات الاستخدام</th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-row">
+                <td>@item.Name</td>
+                <td>@item.Price ريال</td>
+                <td>@item.Period يوم</td>
+                <td>@item.MaxUsageCount</td>
+                <td class="text-center">
+                    <div class="d-flex justify-content-center gap-3">
+                        <button class="sent-btn w-auto open-side" onclick="PassData('@item.Name', @item.Price, @item.MaxUsageCount, @item.Period, '@item.Details')">الخصائص</button>
+                        <a asp-action="UpdateBrokerPackage" asp-route-id="@item.Id" class="edit-btn w-auto">تعديل</a>
+                        <button class="delete-btn w-auto" data-bs-toggle="modal" data-bs-target="#delete" onclick="SendToRemove('@item.Id')">حذف الباقة</button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="side-container">
+    <div class="side-details" style="min-width: 500px">
+        <div class="side-details-header d-flex mb-4">
+            <p class="m-auto font-b">تفاصيل الباقة</p>
+            <i class="fa-solid fa-xmark close-side cursor-p"></i>
+        </div>
+
+        <div class="side-title mb-4">
+            <p class="font-b mb-2 font-xs">اسم الباقة</p>
+            <p class="p-2 border rounded-3 font-xs text-secondary" id="name"></p>
+        </div>
+
+        <div class="side-title mb-4">
+            <p class="font-b mb-2 font-xs">سعر الباقة</p>
+            <p class="p-2 border rounded-3 font-xs text-secondary d-flex justify-content-between" id="price"> <span class="font-b rs">ريال</span></p>
+        </div>
+
+        <div class="side-title mb-4">
+            <p class="font-b mb-2 font-xs">عدد مرات الاستخدام</p>
+            <p class="p-2 border rounded-3 font-xs text-secondary" id="maxCount"></p>
+        </div>
+
+        <div class="side-title mb-4">
+            <p class="font-b mb-2 font-xs">مدة سريان الباقة</p>
+            <p class="p-2 border rounded-3 font-xs text-secondary" id="duration"> <span>يوم</span></p>
+        </div>
+
+        <div class="side-disc">
+            <p class="font-b mb-2 font-xs">وصف الباقة</p>
+            <p class="p-2 border rounded-3 font-xs text-secondary" id="details">
+
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<!--delete Modal Start -->
+<div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b" id="filterLabel">حذف الباقة </h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="font-xs">هل تريد حذف الباقة ؟</p>
+            </div>
+            <div class="modal-footer">
+                <span hidden></span>
+                <button type="button" class="secondary-btn w-100 py-3" onclick="Remove(this)">تأكيد حذف </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--delete modal End-->
+@section scripts {
+    <script>
+        $(document).ready(function () {
+
+            $(".dt-search input").attr("placeholder", `بحث باسم الباقه - سعر الباقه - مدة سريان الباقه -  عدد مرات الاستخدام  `);
+
+
+            $('.close-side , .side-container').click(function () {
+                $('.side-container').css('transform', 'translateX(-100%)');
+            })
+
+            $('.side-details').click(function (e) {
+                e.stopPropagation();
+            })
+
+            $('.open-side').click(function () {
+                $('.side-container').css('transform', 'translateX(0)');
+            })
+        });
+
+
+        function PassData(name, price, maxCount, duration, details) {
+            $('.side-details p#name').text(name);
+            $('.side-details p#price').text(price + ' ريال');
+            $('.side-details p#maxCount').text(maxCount);
+            $('.side-details p#duration').text(duration + ' يوم');
+            $('.side-details p#details').text(details);
+        }
+
+        function SendToRemove(id) {
+            $('#delete span').text(id);
+        }
+
+        function Remove(btn) {
+            $(btn).attr('disabled', true);
+            var id = $(btn).siblings('span').text();
+            $("#delete").modal('hide');
+            $.ajax({
+                url: "/Finance/DeleteBrokerPackage",
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (result) {
+                    toastr.success('تم حذف الباقة بنجاح');
+                    setInterval(function () { window.location.href = "/Finance/BrokersPackages" }, 2000);
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                }
+            });
+        }
+
+    </script>
+}
+
+

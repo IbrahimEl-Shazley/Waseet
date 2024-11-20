@@ -1,0 +1,48 @@
+﻿@model Wasit.Services.ViewModels.Estates.MyEstates.MyRequestPageViewModel
+
+@{
+    ViewData["Title"] = "طلبات التقييم";
+}
+
+
+<div class="filter-nav-2 d-flex justify-content-center flex-row list-group">
+    @* <button class="list-group-item all now active" onclick="Reload(this, @Model.EstateId,'@RatingStatus.New')">جديدة</button> *@
+    <button class="list-group-item all now active" onclick="Reload(this, @Model.EstateId,'@RatingStatus.Current')">حالية</button>
+    <button class="list-group-item all now" onclick="Reload(this, @Model.EstateId,'@RatingStatus.Finished')">منتهية</button>
+</div>
+<div>
+    <table id="" class="data-table responsive nowrap" width="100%">
+        <thead>
+            <tr class="table-head">
+                <th class="text-center">رقم الطلب</th>
+                <th class="text-center">اسم صاحب الطلب</th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Requests)
+            {
+                <tr class="table-row">
+                    <td>@item.Id</td>
+                    <td>@item.UserName</td>
+                    <td class="text-center">
+                        <div class="d-flex gap-3 justify-content-center">
+                            <a href="/Estates/MyRequestDetails?requestId=@item.Id&category=@ViewBag.category&requestType=2" class="edit-btn">التفاصيل</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section scripts {
+    <script>
+        function Reload(btn, estateId, status) {
+            window.location.href = `/Estates/MyEvaluationRequests?category=@ViewBag.category&estateId=${estateId}?&status=${status}`;
+
+            
+        }
+    </script>
+}

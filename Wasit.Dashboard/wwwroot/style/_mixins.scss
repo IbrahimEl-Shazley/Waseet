@@ -1,0 +1,20 @@
+@mixin site-btn ( $bg-color, $color ,$b-color , $size ,$h-color) {
+    display: flex;
+    align-items: center;
+    padding:7px 20px;
+    background-color: $bg-color;
+    color: $color;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid $b-color;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: .5s;
+    display: flex;
+    justify-content:center;
+    &:hover{
+        background-color: $white-color;
+        color: $h-color;
+    }
+}

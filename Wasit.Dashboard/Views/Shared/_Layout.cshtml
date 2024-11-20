@@ -1,0 +1,530 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="~/imgs/logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waseet | وسيط</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="~/plugins/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="~/plugins/fontawesome-free-6.5.2-web/css/all.min.css">
+
+    <!-- toastr -->
+    <link href="~/plugins/toastr.js/toastr.min.css" rel="stylesheet" />
+
+    <!-- datatables -->
+    @* <link href="~/plugins/data-table/datatables.min.css" rel="stylesheet" /> *@
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.0.8/cr-2.0.3/date-1.5.2/fh-4.0.1/r-3.0.2/datatables.min.css" rel="stylesheet">
+
+    <!-- select2 -->
+    <link rel="stylesheet" href="~/plugins/select2/select2.min.css">
+
+    <link rel="stylesheet" href="~/plugins/drag-img-upload/fileUpload.css">
+
+    <link rel="stylesheet" href="~/plugins/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css">
+
+    <!-- style -->
+    <link rel="stylesheet" href="~/style/style.css">
+</head>
+<body>
+    <main class="main">
+        <!-- start the tabs of aside -->
+        <aside class="side-menu">
+            <div class="logo d-flex align-items-center justify-content-center p-3">
+                <img src="~/imgs/logo.png" alt="logo">
+                <p class="logo-title fontawesom font-xl font-b">وسيط</p>
+            </div>
+            <div class="tabs px-2 py-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link w-100 d-flex justify-content-between align-items-center px-2 " href="/home/Index">
+                            الاحصائيات
+                            <i class="fa-solid fa-angle-left arrow"></i>
+                        </a>
+                    </li>
+                   @*  <li class="nav-item">
+                        <a class="nav-link w-100 d-flex justify-content-between align-items-center px-2" asp-controller="Advertisments" asp-action="Index">
+                            الاحصائيات
+                            <i class="fa-solid fa-angle-left arrow"></i>
+                        </a>
+                    </li> *@
+                    <li class="nav-item">
+                        <a class="nav-link w-100 d-flex justify-content-between align-items-center px-2" data-bs-toggle="collapse" href="#users" aria-controls="users" aria-expanded="false">
+                            المستخدمين
+                            <i class="fa-solid fa-angle-left arrow"></i>
+                        </a>
+                        <div class="collapse child-list" id="users">
+                            <ul class="nav nav-tabs flex-column">
+                                <li class="nav-item">
+                                    <a href='/Users/Owners' class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        ملاك العقارات
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a asp-controller="Users" asp-action="Brokers" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        الوسطاء العقاريين
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a asp-controller="Users" asp-action="Delegates" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        المناديب العقاريين
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a asp-controller="Users" asp-action="Developers" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        المطورين العقاريين
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link w-100 d-flex justify-content-between align-items-center px-2" data-bs-toggle="collapse" href="#realstate" aria-controls="uers" aria-expanded="false">
+                            العقارات
+                            <i class="fa-solid fa-angle-left arrow"></i>
+                        </a>
+                        <div class="collapse child-list" id="realstate">
+                            <ul class="nav nav-tabs flex-column">
+                                <li class="nav-item">
+                                    @* <a href="#my-realstate" class="c-link w-100" data-bs-toggle="collapse" aria-controls="my-realstate"> *@
+                                    <a href="/Estates/MyEstates?category=Sale&type=0" class="c-link w-100" aria-controls="my-realstate">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        عقاراتى
+                                    </a>
+                                    @* <div class="collapse grandchild-list" id="my-realstate">
+                                        <ul class="nav nav-tabs flex-column">
+                                            <li class="nav-item ">
+                                                <a href="/Estates/MyEstates?category=Sale&type=0" class="gc-link">
+                                                    <i class="fa-solid fa-angles-left gc-arrow"></i>
+                                                    بيانات العقارات
+                                                </a>
+                                            </li>
+                                            <li class="nav-item ">
+                                                <a asp-controller="Estates" asp-action="MyRequests" class="gc-link">
+                                                    <i class="fa-solid fa-angles-left gc-arrow"></i>
+                                                    طلبات العقارات
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div> *@
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#users-realstate" class="c-link w-100" data-bs-toggle="collapse" aria-controls="users-realstate">
+                                        <i class="fa-solid fa-angle-left arrow"></i>عقارات المستخدمين
+                                    </a>
+                                    <div class="collapse grandchild-list" id="users-realstate">
+                                        <ul class="nav nav-tabs flex-column">
+                                            <li class="nav-item ">
+                                                <a href="/Estates/UsersEstates?category=Sale&type=0" class="gc-link">
+                                                    <i class="fa-solid fa-angles-left gc-arrow"></i>
+                                                    بيانات العقارات
+                                                </a>
+                                            </li>
+@*                                             <li class="nav-item ">
+                                                <a asp-controller="Estates" asp-action="UsersRequests" class="gc-link">
+                                                    <i class="fa-solid fa-angles-left gc-arrow"></i>
+                                                    طلبات العقارات
+                                                </a>
+                                            </li>
+ *@                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link w-100 d-flex justify-content-between align-items-center px-2" data-bs-toggle="collapse" href="#realstate-setting" aria-controls="users" aria-expanded="false">
+                            اعدادات العقارات
+                            <i class="fa-solid fa-angle-left arrow"></i>
+                        </a>
+                        <div class="collapse child-list" id="realstate-setting">
+                            <ul class="nav nav-tabs flex-column">
+                                <li class="nav-item">
+                                    <a asp-controller="EstatesSettings" asp-action="Types" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        انواع العقارات
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a asp-controller="EstatesSettings" asp-action="Specifications" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        خصائص العقارات
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link w-100 d-flex justify-content-between align-items-center px-2" data-bs-toggle="collapse" href="#additional-sections" aria-controls="users" aria-expanded="false">
+                            اقسام اضافية
+                            <i class="fa-solid fa-angle-left arrow"></i>
+                        </a>
+                        <div class="collapse child-list" id="additional-sections">
+                            <ul class="nav nav-tabs flex-column">
+                             @*    <li class="nav-item">
+                                    <a href="#" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        الفرص الاستثمارية
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a href="#" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        خدمات عقارية
+                                    </a>
+                                </li> *@
+                                <li class="nav-item">
+                                    <a class="c-link w-100" data-bs-toggle="collapse" href="#property-management" aria-controls="users" aria-expanded="false">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        ادارة الاملاك
+                                    </a>
+                                    <div class="collapse grandchild-list" id="property-management">
+                                        <ul class="nav nav-tabs flex-column">
+                                            <li class="nav-item">
+                                                <a asp-controller="PropertyManagement" asp-action="RentManagement" class="gc-link">
+                                                    <i class="fa-solid fa-angles-left gc-arrow"></i>
+                                                    ادارة الايجارات
+                                                </a>
+                                            </li>
+                                            <li class="nav-item ">
+                                                <a asp-controller="PropertyManagement" asp-action="MaintenanceManagement" class="gc-link">
+                                                    <i class="fa-solid fa-angles-left gc-arrow"></i>
+                                                    ادارة المرافق والصيانة
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link w-100 d-flex justify-content-between align-items-center px-2" asp-controller="Advertisments" asp-action="Index">
+                            الاعلانات
+                            <i class="fa-solid fa-angle-left arrow"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link w-100 d-flex justify-content-between align-items-center px-2" data-bs-toggle="collapse" href="#money" aria-controls="money" aria-expanded="false">
+                            الماليات
+                            <i class="fa-solid fa-angle-left arrow"></i>
+                        </a>
+                        <div class="collapse child-list" id="money">
+                            <ul class="nav nav-tabs flex-column">
+@*                                 <li class="nav-item">
+                                    <a href="#" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        الحسابات المالية
+                                    </a>
+                                </li>
+ *@                                <li class="nav-item ">
+                                    <a asp-controller="Finance" asp-action="Profits" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        الربح من المشروع
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link w-100 d-flex justify-content-between align-items-center px-2" data-bs-toggle="collapse" href="#settings" aria-controls="users" aria-expanded="false">
+                            الاعدادات
+                            <i class="fa-solid fa-angle-left arrow"></i>
+                        </a>
+                        <div class="collapse child-list" id="settings">
+                            <ul class="nav nav-tabs flex-column">
+@*                                 <li class="nav-item">
+                                    <a href="#" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        بياناتى
+                                    </a>
+                                </li>
+ *@                                <li class="nav-item ">
+                                    <a href="#city" class="c-link w-100" data-bs-toggle="collapse" aria-controls="city" aria-expanded="false">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        المدن والاحياء
+                                    </a>
+                                    <div class="collapse grandchild-list" id="city">
+                                        <ul class="nav nav-tabs flex-column">
+                                            <li class="nav-item">
+                                                <a asp-controller="Cities" asp-action="Index" class="gc-link">
+                                                    <i class="fa-solid fa-angles-left gc-arrow"></i>
+                                                    المدن
+                                                </a>
+                                            </li>
+                                            <li class="nav-item ">
+                                                <a asp-controller="Regions" asp-action="Index" class="gc-link">
+                                                    <i class="fa-solid fa-angles-left gc-arrow"></i>
+                                                    الاحياء
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+@*                                 <li class="nav-item">
+                                    <a class="c-link w-100" data-bs-toggle="collapse" href="#property-management" aria-controls="property-management" aria-expanded="false">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        الصلاحيات
+                                    </a>
+                                    <div class="collapse grandchild-list" id="property-management">
+                                        <ul class="nav nav-tabs flex-column">
+                                            <li class="nav-item">
+                                                <a href="#" class="gc-link">
+                                                    <i class="fa-solid fa-angles-left gc-arrow"></i>
+                                                    الوظائف
+                                                </a>
+                                            </li>
+                                            <li class="nav-item ">
+                                                <a href="#" class="gc-link">
+                                                    <i class="fa-solid fa-angles-left gc-arrow"></i>
+                                                    المستخدمين
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+ *@                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link w-100 d-flex justify-content-between align-items-center px-2" data-bs-toggle="collapse" href="#connect" aria-controls="users" aria-expanded="false">
+                            تواصل
+                            <i class="fa-solid fa-angle-left arrow"></i>
+                        </a>
+                        <div class="collapse child-list" id="connect">
+                            <ul class="nav nav-tabs flex-column">
+                                <li class="nav-item">
+                                    <a asp-controller="Notifications" asp-action="Index" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        الاشعارات
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a asp-controller="ContactUs" asp-action="Index" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        الرسائل
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link w-100 d-flex justify-content-between align-items-center px-2" data-bs-toggle="collapse" href="#info">
+                            معلومات عامة
+                            <i class="fa-solid fa-angle-left arrow"></i>
+                        </a>
+                        <div class="collapse child-list" id="info">
+                            <ul class="nav nav-tabs flex-column">
+                                <li class="nav-item">
+                                    <a asp-controller="AboutUs" asp-action="Index" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        عن التطبيق
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a asp-controller="Q_A" asp-action="Index" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        الاسئلة المتكررة
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a asp-controller="TermsAndConditions" asp-action="Index" class="c-link">
+                                        <i class="fa-solid fa-angle-left arrow"></i>
+                                        الشروط والاحكام
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link w-100 d-flex justify-content-between align-items-center px-2" data-bs-toggle="modal" data-bs-target="#logout">
+                            تسجيل الخروج
+                            <i class="fa-solid fa-angle-left arrow"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <!-- end the tabs of aside -->
+        <!-- start the section -->
+        <section>
+            <div class="main-container">
+                <nav class="d-flex justify-content-between align-items-center p-3 main-nav">
+                    <div class="right d-flex align-items-center">
+                        <div class="menu">
+                            <i class="fa-solid fa-indent"></i>
+                        </div>
+                        <h5 class="title">@ViewData["Title"]</h5>
+                    </div>
+                    <div class="left d-flex align-items-center">
+                        <a href="notification.html" class="notification">
+                            <i class="fa-regular fa-bell"></i>
+                        </a>
+                        <div class="profile d-flex align-items-center">
+                            <img src="~/imgs/test-img/profile.jpg" alt="avatar" class="avatar">
+                            <div>
+                                <h5 class="name">محمد السيد السيد </h5>
+                                <p class="position">المدير التنفيذي</p>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <div class="main-section">
+                    @RenderBody()
+                </div>
+            </div>
+
+
+
+
+
+        </section>
+        <!-- end the section -->
+        <div class="loader-container">
+            <div class="loader">
+                <div class="loading-wave">
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+
+
+
+    <!--filter Modal Start -->
+    <div class="modal fade" id="filter" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-bold font-b" id="filterLabel">فلتر البحث</h5>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="semester" class="my-2 font-b">حالة العقار</label>
+                    <select name="city[]" id="semester" class="select2">
+                        <option disabled selected class="gray">اختر حالة العقار</option>
+                        <option selected hidden>اختر نوع الخدمة</option>
+                        <option value="1">شراء</option>
+                        <option value="2">ايجار طويل الامد</option>
+                        <option value="3">ترفيهي</option>
+                        <option value="4">ايجار يومي</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="secondary-btn w-100 py-3">بحث</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--filter modal End-->
+
+    <!-- logout modal start -->
+    <div class="modal fade" id="logout" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-b" id="staticBackdropLabel">تسجيل الخروج</h5>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center mb-4">هل انت متاكد من تسجيل الخروج</p>
+                </div>
+                <div class="modal-footer">
+                    <a asp-controller="Home" asp-action="SignOut" class="secondary-btn w-100 py-3">تأكيد</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- logout modal end -->
+
+    <!-- bootstrap -->
+    <script src="~/plugins/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+
+    <!-- fontawesome -->
+    <script src="~/plugins/fontawesome-free-6.5.2-web/js/all.min.js"></script>
+
+    <!-- jquery -->
+    <script src="~/plugins/jQuery/jquery-3.7.1.min.js"></script>
+
+    <!--toastr-->
+    <script src="~/plugins/toastr.js/toastr.min.js"></script>
+
+    <!-- data table -->
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.0.8/cr-2.0.3/date-1.5.2/fh-4.0.1/r-3.0.2/datatables.min.js"></script>
+    @* <script src="~/plugins/data-table/datatables.min.js"></script> *@
+
+    <!-- select2 -->
+    <script src="~/plugins/select2/select2.js"></script>
+
+    <script src="~/plugins/upload-img/upload-img-script-2.js"></script>
+
+    <script src="~/plugins/drag-img-upload/fileUpload.js"></script>
+
+    <script src="~/plugins/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+
+    <!-- script -->
+    <script src="~/script/script.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.data-table').DataTable({
+                responsive: true,
+                pageLength: 6,
+                fixedHeader: {
+                    header: false,
+                },
+                sort: false,
+                bInfo: false,
+                language: {
+                    info: 'Showing page _PAGE_ of _PAGES_',
+                    infoEmpty: 'لا يوجد بيانات',
+                    infoFiltered: '(filtered from _MAX_ total records)',
+                    lengthMenu: 'Display _MENU_ records per page',
+                    zeroRecords: 'لا يوجد بيانات',
+                    emptyTable: 'لا يوجد بيانات'
+                }
+            });
+
+            toastr.options = {
+                "debug": false,
+                "positionClass": "toast-top-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 5000,
+                "extendedTimeOut": 1000
+            }
+
+            $('.select2').select2();
+
+            $(".nav-item .c-link").click(function () {
+                console.log("clicked");
+                $(".nav-item .c-link").removeClass("active");
+                $(this).addClass("active");
+            });
+
+            // $(document).ajaxStart(function () {
+            //     $(".loader-container").show();
+            // });
+            // $(document).ajaxStop(function () {
+            //     $(".loader-container").fadeOut();
+            // });
+        });
+    </script>
+
+    @RenderSection("scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+</body>
+</html>

@@ -1,0 +1,165 @@
+﻿@model Wasit.Services.ViewModels.PropertyManagement.RentManagement.RentManagementRequestDetailsViewModel
+@{
+    ViewData["Title"] = "تفاصيل العقار";
+}
+
+<style>
+    <link rel="stylesheet" href="~/plugins/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css" >
+</style>
+
+<div class="row mb-5">
+    <div class="col-lg-6 .col-md-12 .col-12">
+        <div>
+            <!-- Carousel Big -->
+            <div class="product-carousel owl-carousel owl-theme position-relative" id="big">
+                <img src="@Model.Image" alt="" class="pro-slide-img md">
+            </div>            
+        </div>
+        <!--  -->
+    </div>
+    <div class="col-lg-6 .col-md-12 .col-12 mt-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="font-b font-sm mb-4">@Model.Name</h5>
+        </div>
+        <div class="location d-flex justify-content-between flex-wrap gap-2 w-100 mb-3">
+            <div class="d-flex justify-content-center align-items-center">
+                <img class="mx-1" src="imgs/location.png" alt="">
+                <p class="m-0 font-xs text-secondary">@Model.Address</p>
+            </div>
+            <p class="font-xs m-0 text-secondary"> <span class="dark-blue">@Model.UniqueNumber</span>:الرقم المرجعي</p>
+            <p class="font-xs m-0 text-secondary">عدد الشقق : <span class="dark-blue">@Model.ApartmentsCount</span></p>
+        </div>
+        <div class="d-flex justify-content-between flex-wrap gap-2 w-100 mb-3">
+            <p class="text-secondary font-xs">اسم المستخدم : <span class="dark-blue">@Model.UserName</span></p>
+        </div>
+    </div>
+</div>
+<table id="" class="data-table responsive nowrap" width="100%">
+    <thead>
+        <tr class="table-head">
+            <th class="text-center p-3">اسم الشقة</th>
+            <th class="text-center">رقم الشقة</th>
+            <th class="text-center">تاريخ الدفع</th>
+            <th class="text-center">قيمة الايجار</th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Apartments)
+        {
+            <tr class="table-row">
+                <td>@item.Name</td>
+                <td>@item.Number</td>
+                <td>@item.PaymentDate</td>
+                <td>@item.Value ريال</td>
+                <td>
+                    <p class="text-danger">@item.IsPaid</p>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script src="plugins/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var bigimage = $("#big");
+            var thumbs = $("#thumbs");
+            var syncedSecondary = true;
+
+            bigimage
+                .owlCarousel({
+                    items: 1,
+                    loop: true,
+                    rtl: true,
+                    nav: false,
+                    dots: false,
+                    autoplay: true,
+                    margin: 8,
+                    autoplayTimeout: 5000,
+                    autoplaySpeed: 1500,
+                    smartSpeed: 1500,
+                    slideSpeed: 2000,
+                    responsiveRefreshRate: 200,
+                })
+                .on("changed.owl.carousel", syncPosition);
+
+            thumbs
+                .on("initialized.owl.carousel", function () {
+                    thumbs
+                        .find(".owl-item")
+                        .eq(0)
+                        .addClass("current");
+                })
+                .owlCarousel({
+                    items: 2,
+                    rtl: true,
+                    dots: false,
+                    nav: false,
+                    margin: 5,
+                    smartSpeed: 500,
+                    // slideSpeed: 500,
+                    slideBy: 4,
+                    responsiveRefreshRate: 100,
+                    responsive: {
+                        1200: {
+                            items: 4,
+                        },
+                        992: {
+                            items: 3,
+                        },
+                        768: {
+                            items: 4,
+                        },
+                        375: {
+                            items: 3,
+                        },
+                    }
+                })
+                .on("changed.owl.carousel", syncPosition2);
+            function syncPosition(el) {
+                var count = el.item.count - 1;
+                var current = Math.round(el.item.index - el.item.count / 2 - 0.5);
+                if (current < 0) {
+                    current = count;
+                }
+                if (current > count) {
+                    current = 0;
+                }
+                //to this
+                thumbs
+                    .find(".owl-item")
+                    .removeClass("current")
+                    .eq(current)
+                    .addClass("current");
+                var onscreen = thumbs.find(".owl-item.active").length - 1;
+                var start = thumbs
+                    .find(".owl-item.active")
+                    .first()
+                    .index();
+                var end = thumbs
+                    .find(".owl-item.active")
+                    .last()
+                    .index();
+                if (current > end) {
+                    thumbs.data("owl.carousel").to(current, 100, true);
+                }
+                if (current < start) {
+                    thumbs.data("owl.carousel").to(current - onscreen, 100, true);
+                }
+            }
+            function syncPosition2(el) {
+                if (syncedSecondary) {
+                    var number = el.item.index;
+                    bigimage.data("owl.carousel").to(number, 100, true);
+                }
+            }
+            thumbs.on("click", ".owl-item", function (e) {
+                e.preventDefault();
+                var number = $(this).index();
+                bigimage.data("owl.carousel").to(number, 300, true);
+            });
+        });
+    </script>
+}

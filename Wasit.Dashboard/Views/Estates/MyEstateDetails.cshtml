@@ -1,0 +1,450 @@
+﻿@model Wasit.Services.ViewModels.Estates.MyEstates.MyEstateDetailsViewModel
+
+@{
+    ViewData["Title"] = "تفاصيل العقار";
+    ViewData["Label"] = "سعر العقار";
+    if (ViewBag.Category != CategoryType.Sale)
+    {
+        ViewData["Label"] = "قيمة الايجار";
+    }
+}
+
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-lg-6 .col-md-12 .col-12">
+            <div class="first-section">
+                <div>
+                    <!-- Carousel Big -->
+                    <div class="product-carousel owl-carousel owl-theme position-relative" id="big">
+                        @foreach (var image in Model.Images)
+                        {
+                            <img src="@image.Url" alt="" class="pro-slide-img md">
+                        }
+                    </div>
+                    <!-- Carousel Thumbs -->
+                    <div class="dots-imgs owl-carousel owl-theme mb-3" id="thumbs">
+                        @foreach (var image in Model.Images)
+                        {
+                            <div class="owl-dot">
+                                <img src="@image.Url" alt="" class="dot-img">
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!--  -->
+                <div class="site-card p-3">
+                    <h4 class="font-b m-0 pb-2 mb-3 border-bottom">طلبات العقار:</h4>
+                    <div>
+                        @if (ViewBag.Category == CategoryType.Sale || ViewBag.Category == CategoryType.Rent)
+                        {
+                            <div>
+                                <a href="/Estates/MyReservationRequests?category=@ViewBag.Category&estateId=@Model.Id&status=@ReservationStatus.Current" class="text-decoration-none text-dark">
+                                    <div class="site-card rounded p-3 d-flex flex-column">
+                                        <div class="d-flex w-100">
+                                            <img src="~/imgs/rent-bell.png" class="mx-2">
+                                            <div class="w-100">
+                                                <p class="m-0">طلبات الحجز</p>
+                                                <div class="d-flex justify-content-between w-100">
+                                                    <p class="m-0 order-num">@Model.ReservationRequestsCount</p>
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <p class="mb-1 show-more">عرض المزيد</p>
+                                                        <i class="fa-solid fa-angle-left order-arrow"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                        @if (ViewBag.Category == CategoryType.Sale || ViewBag.Category == CategoryType.Rent)
+                        {
+                            <div>
+                                <a href="/Estates/MyEvaluationRequests?category=@ViewBag.Category&estateId=@Model.Id&status=@RatingStatus.Current" class="text-decoration-none text-dark">
+                                    <div class="site-card rounded  p-3 d-flex flex-column">
+                                        <div class="d-flex w-100">
+                                            <img src="~/imgs/rating.png" class="mx-2">
+                                            <div class="w-100">
+                                                <p class="m-0">طلبات التقييم</p>
+                                                <div class="d-flex justify-content-between w-100">
+                                                    <p class="m-0 order-num">@Model.EvaluationRequestsCount</p>
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <p class="mb-1 show-more">عرض المزيد</p>
+                                                        <i class="fa-solid fa-angle-left order-arrow"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                        @if (ViewBag.Category == CategoryType.Sale)
+                        {
+                            <div>
+                                <a href="/Estates/MyPurchaseRequests?estateId=@Model.Id" class="text-decoration-none text-dark">
+                                    <div class="site-card rounded  p-3 d-flex flex-column">
+                                        <div class="d-flex w-100">
+                                            <img src="~/imgs/house-2.png" class="mx-2">
+                                            <div class="w-100">
+                                                <p class="m-0">طلبات الشراء</p>
+                                                <div class="d-flex justify-content-between w-100">
+                                                    <p class="m-0 order-num">@Model.PurchaseRequestsCount</p>
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <p class="mb-1 show-more">عرض المزيد</p>
+                                                        <i class="fa-solid fa-angle-left order-arrow"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                        @if (ViewBag.Category == CategoryType.Rent)
+                        {
+                            <div>
+                                <a href="/Estates/MyRentRequests?estateId=@Model.Id" class="text-decoration-none text-dark">
+                                    <div class="site-card rounded  p-3 d-flex flex-column">
+                                        <div class="d-flex w-100">
+                                            <img src="~/imgs/house-2.png" class="mx-2">
+                                            <div class="w-100">
+                                                <p class="m-0">طلبات الايجار</p>
+                                                <div class="d-flex justify-content-between w-100">
+                                                    <p class="m-0 order-num">@Model.RentRequestsCount</p>
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <p class="mb-1 show-more">عرض المزيد</p>
+                                                        <i class="fa-solid fa-angle-left order-arrow"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                        @if (ViewBag.Category == CategoryType.DailyRent)
+                        {
+                            <div>
+                                <a href="/Estates/MyDailyRentRequests?estateId=@Model.Id&status=@DailyRentStatus.New" class="text-decoration-none text-dark">
+                                    <div class="site-card rounded  p-3 d-flex flex-column">
+                                        <div class="d-flex w-100">
+                                            <img src="~/imgs/house-2.png" class="mx-2">
+                                            <div class="w-100">
+                                                <p class="m-0">طلبات الحجز</p>
+                                                <div class="d-flex justify-content-between w-100">
+                                                    <p class="m-0 order-num">@Model.DailyRentRequestsCount</p>
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <p class="mb-1 show-more">عرض المزيد</p>
+                                                        <i class="fa-solid fa-angle-left order-arrow"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 .col-md-12 .col-12">
+            <div class="d-flex flex-column w-100 px-3 mx-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="font-b font-sm mb-4">@Model.Name</h5>
+                </div>
+                <div class="location d-flex justify-content-between p-color w-100 mb-3">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img class="mx-1" src="~/imgs/location.png" alt="">
+                        <p class="m-0 font-xs text-secondary">@Model.Addresss</p>
+                    </div>
+                    <p class="font-xs m-0 text-secondary"> <span class="dark-blue">@Model.Number</span>:الرقم المرجعي</p>
+                </div>
+                <div class="real-state-details d-flex gap-3 mb-3 flex-wrap">
+                    @foreach (var item in Model.Specs)
+                    {
+                        <div class="d-flex align-items-center">
+                            <img src="@item.Icon" alt="" class="mx-1" style="width: 20px; height: 20px;">
+                            <p class="m-0 text-dark font-xxs">@item.Name</p>
+                        </div>
+                    }
+                </div>
+                <div class="description mb-3">
+                    <h5 class="font-xs font-b">
+                        وصف العقار :
+                    </h5>
+                    <p class="font-xxs p-color">
+                        @Model.Description
+                    </p>
+                </div>
+                <div class="d-flex gap-2">
+                    @if (Model.IsReserved && ViewBag.Category == CategoryType.Sale)
+                    {
+                        <div class="site-card d-flex align-items-center py-2 ps-5">
+                            <img src="~/imgs/small-bell.png" alt="" class="mx-1">
+                            <p class="dark-blue font-xxs m-1 font-b">محجوز</p>
+                        </div>
+                    }
+                    @if (Model.IsDevelopable)
+                    {
+                        <div class="site-card d-flex align-items-center ps-5">
+                            <img src="~/imgs/upgradable.png" alt="" class="mx-1">
+                            <p class="dark-blue font-xxs m-1 font-b">قابل للتطوير</p>
+                        </div>
+                    }
+                </div>
+                <div class="real-state-price mb-5 p-3 rounded">
+                    <div class="d-flex flex-column py-2">
+                        <div class="d-flex mb-4">
+                            <img src="~/imgs/price-1.png" alt="" class="mx-1">
+                            <p class="m-0 font-xxs "> @ViewData["Label"]: <span class="font-b dark-blue">@Model.Price رس</span></p>
+                        </div>
+                        @* <div class="d-flex gap-3">
+                        <button class="secondary-btn font-xxxs py-1" data-bs-toggle="modal" data-bs-target="#accept">قبول</button>
+                        <button class="delete-btn font-xxxs py-1" data-bs-toggle="modal" data-bs-target="#reject">رفض</button>
+                        <button class="main-btn font-xxxs py-1 font-n" data-bs-toggle="modal" data-bs-target="#add-price">اضافة سعر العربون</button>
+                        </div> *@
+                    </div>
+                    @if (ViewBag.Category == CategoryType.Sale)
+                    {
+                        <div class="d-flex align-items-center py-2 ">
+                            <img src="~/imgs/price-2.png" alt="" class="mx-1">
+                            <p class="m-0 font-xxs">سعر العربون: <span class="font-b dark-blue">@Model.Deposit رس</span></p>
+                        </div>
+                    }
+                    @* <div class="d-flex justify-content-between align-items-center flex-wrap mt-3">
+                    <div class="d-flex align-items-center py-2 ">
+                    <img src="~/imgs/price-1.png" alt="" class="mx-1">
+                    <p class="m-0 font-xxs">سعر التثمين:<span class="font-b dark-blue">000000 رس</span></p>
+                    </div>
+                    <button class="main-btn small-btn font-n" data-bs-toggle="modal" data-bs-target="#add-price">تغيير سعر التثمين</button>
+                    </div> *@
+                    @if (ViewBag.Category == CategoryType.Sale)
+                    {
+                        <div class="d-flex justify-content-between align-items-center flex-wrap mt-3">
+                            <div class="d-flex align-items-center">
+                                <img src="~/imgs/avararge.png" alt="" class="mx-1">
+                                <p class="m-0 font-xxs">متوسط السعر بناءا علي تسعير المستخدمين: <span class="font-b dark-blue">@Model.AveragePrice رس</span></p>
+                            </div>
+                            @if (Model.AveragePrice > 0)
+                            {
+                                <button class="main-btn small-btn font-n" data-bs-toggle="modal" data-bs-target="#delete">حذف سعر العملاء</button>
+                            }
+                        </div>
+                        @if (Model.FinalSalePrice > 0 && Model.IsSold)
+                        {
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mt-3">
+                                <div class="d-flex align-items-center">
+                                    <img src="~/imgs/price-3.png" alt="" class="mx-1">
+                                    <p class="m-0 font-xxs">السعر النهائي للبيع: <span class="font-b dark-blue">@Model.FinalSalePrice رس</span></p>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--delete Modal Start -->
+<div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b" id="filterLabel">حذف سعر العملاء</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="font-xs">هل تريد حذف سعر العملاء</p>
+            </div>
+            <div class="modal-footer">
+                <span hidden>@Model.Id</span>
+                <button type="button" class="secondary-btn w-100 py-3" onclick="DeletePrices(this)">تأكيد حذف سعر العملاء</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--delete modal End-->
+<!-- add value modal start -->
+<div class="modal fade" id="accept">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b">اضافة قيمة العربون</h5>
+            </div>
+            <div class="modal-body">
+                <label for="value" class="input-label">القيمه</label>
+                <input type="number" class="site-input mb-0" id="value" placeholder="ادخل القيمه">
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn w-100 py-3">تأكيد</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- add value modal end -->
+<!-- reject modal start -->
+<div class="modal fade" id="reject">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b">سبب الرفض</h5>
+            </div>
+            <div class="modal-body">
+                <label for="reject" class="input-label">السبب</label>
+                <input type="text" class="site-input mb-0" id="value" placeholder="ادخل السبب">
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn w-100 py-3">ارسال</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- reject modal end -->
+<!-- add-price modal start -->
+<div class="modal fade" id="add-price">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header align-items-center flex-column">
+                <h5 class="modal-title font-bold font-b mb-2">سعر العربون</h5>
+                <p class="font-xxs text-secondary">تسيب ينينب نيميمب يمب يبيبميب </p>
+            </div>
+            <div class="modal-body">
+                <label for="reject" class="input-label">سعر العربون</label>
+                <input type="text" class="site-input mb-0" id="value" placeholder="ادخل سعر العربون">
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn w-100 py-3">تاكيد</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- add-price modal end -->
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            var bigimage = $("#big");
+            var thumbs = $("#thumbs");
+            var syncedSecondary = true;
+
+            bigimage
+                .owlCarousel({
+                    items: 1,
+                    loop: true,
+                    rtl: true,
+                    nav: false,
+                    dots: false,
+                    autoplay: true,
+                    margin: 8,
+                    autoplayTimeout: 5000,
+                    autoplaySpeed: 1500,
+                    smartSpeed: 1500,
+                    slideSpeed: 2000,
+                    responsiveRefreshRate: 200,
+                })
+                .on("changed.owl.carousel", syncPosition);
+
+            thumbs
+                .on("initialized.owl.carousel", function () {
+                    thumbs
+                        .find(".owl-item")
+                        .eq(0)
+                        .addClass("current");
+                })
+                .owlCarousel({
+                    items: 2,
+                    rtl: true,
+                    dots: false,
+                    nav: false,
+                    margin: 5,
+                    smartSpeed: 500,
+                    // slideSpeed: 500,
+                    slideBy: 4,
+                    responsiveRefreshRate: 100,
+                    responsive: {
+                        1200: {
+                            items: 4,
+                        },
+                        992: {
+                            items: 3,
+                        },
+                        768: {
+                            items: 4,
+                        },
+                        375: {
+                            items: 3,
+                        },
+                    }
+                })
+                .on("changed.owl.carousel", syncPosition2);
+            function syncPosition(el) {
+                var count = el.item.count - 1;
+                var current = Math.round(el.item.index - el.item.count / 2 - 0.5);
+                if (current < 0) {
+                    current = count;
+                }
+                if (current > count) {
+                    current = 0;
+                }
+                //to this
+                thumbs
+                    .find(".owl-item")
+                    .removeClass("current")
+                    .eq(current)
+                    .addClass("current");
+                var onscreen = thumbs.find(".owl-item.active").length - 1;
+                var start = thumbs
+                    .find(".owl-item.active")
+                    .first()
+                    .index();
+                var end = thumbs
+                    .find(".owl-item.active")
+                    .last()
+                    .index();
+                if (current > end) {
+                    thumbs.data("owl.carousel").to(current, 100, true);
+                }
+                if (current < start) {
+                    thumbs.data("owl.carousel").to(current - onscreen, 100, true);
+                }
+            }
+            function syncPosition2(el) {
+                if (syncedSecondary) {
+                    var number = el.item.index;
+                    bigimage.data("owl.carousel").to(number, 100, true);
+                }
+            }
+            thumbs.on("click", ".owl-item", function (e) {
+                e.preventDefault();
+                var number = $(this).index();
+                bigimage.data("owl.carousel").to(number, 300, true);
+            });
+        });
+
+
+        function DeletePrices(btn) {
+            $(btn).attr('disabled', true);
+            var id = $(btn).siblings('span').text();
+            $("#delete").modal('hide');
+            $.ajax({
+                url: "/Estates/DeleteUsersPrices",
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (result) {
+                    toastr.success('تم الحذف ');
+                    setInterval(function () { window.location.href = `/Estates/MyEstateDetails?id=${id}&category=Sale` }, 2000);
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                }
+            });
+        }
+    </script>
+}

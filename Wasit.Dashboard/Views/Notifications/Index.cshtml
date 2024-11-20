@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "اشعار جديد";
+}
+
+
+<div class="main-section">
+    <div class="add-state">
+        <label for="notifi-head" class="input-label">نص الاشعار</label>
+        <textarea type="text" id="notifi-head" rows="5" placeholder="ادخل نص الاشعار" class="site-input"></textarea>
+
+        <label for="notifi-recipient" class="input-label">متلقى الاشعار</label>
+        <select id="notifi-recipient" class="select2">
+            <option value="" selected disabled>اختر متلقى الاشعار</option>
+            <option value="@(nameof(UserType.Owner))">ملاك العقارات</option>
+            <option value="@(nameof(UserType.Broker))">الوسطاء العقاريين</option>
+            <option value="@(nameof(UserType.Delegate))">المناديب العقاريين</option>
+            <option value="@(nameof(UserType.Developer))">المطورين العقاريين</option>
+        </select>
+
+       @*  <label for="notifi-disc" class="input-label mt-4">وصف الاشعار</label>
+        <textarea id="notifi-disc" rows="5" placeholder="ادخل وصف الاشعار" class="site-input"></textarea> *@
+
+        <a onclick="Send(this)" class="secondary-btn w-100 py-3 mt-5">تأكيد</a>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        function Send(btn) {
+            $(btn).attr('disabled', true);
+            var text = $('textarea#notifi-head').val();
+            var type = $('select#notifi-recipient').val();
+
+            if (text.trim() == '') {
+                toastr.error('من فضلك ادخل نص الاشعار');
+                $(btn).attr('disabled', false);
+                return;
+            }
+            
+            if (text.length > 100) {
+                toastr.error('من فضلك ادخل نص الاشعار اقل من 100 حرف');
+                $(btn).attr('disabled', false);
+                return;
+            }
+
+            if (type == null) { 
+                toastr.error('من فضلك اختر متلقى الاشعار');
+                $(btn).attr('disabled', false);
+                return;
+            }
+
+            $.ajax({
+                url: "/Notifications/Send",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    text: text,
+                    type: type
+                },
+                success: function (result) {
+                    toastr.success('تم الارسال بنجاح');
+                    setInterval(function () { window.location.href = "/Notifications/Index" }, 2000);
+                },
+                failure: function (info) {
+                    toastr.error('حدث خطأ ما');
+                }
+            });
+        }
+    </script>
+}

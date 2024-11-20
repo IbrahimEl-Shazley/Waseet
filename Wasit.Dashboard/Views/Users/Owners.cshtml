@@ -1,0 +1,188 @@
+﻿@model IEnumerable<Wasit.Services.ViewModels.Users.OwnerViewModel>
+@{
+    ViewData["Title"] = "ملاك العقارات";
+}
+
+<table id="" class="data-table responsive nowrap" width="100%">
+    <thead>
+        <tr class="table-head">
+            <th class="text-center p-3">اسم العميل</th>
+            <th class="text-center">رقم الجوال</th>
+            <th class="text-center">الصورة</th>
+            <th class="text-center">رقم الهوية</th>
+            <th class="text-center">المدينة</th>
+            <th class="text-center">الحى</th>
+            <th class="text-center">معلومات اضافية</th>
+            <th class="text-center">التفعيل</th>
+            <th class="text-center">التحكم</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var owner in Model)
+        {
+            <tr class="table-row">
+                <td>@owner.UserName</td>
+                <td>@owner.Phone</td>
+                <td>
+                    <a href="@owner.ProfilePicture" target="_blank">
+                        <img src="@owner.ProfilePicture" width="100" height="100">
+                    </a>
+                </td>
+                <td>@owner.IdentityNo</td>
+                <td>@owner.City</td>
+                <td>@owner.Region</td>
+                <td>
+                    <div class="d-flex gap-3 justify-content-center ">
+                        <button class="show-info-btn secondary-btn" onclick="ShowAdditionalOwnerInfo('@owner.Id')">عرض</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-check form-switch  notifi-switch d-flex justify-content-center">
+                        @if (owner.IsActive)
+                        {
+                            <input onchange="ChangeActivation('@owner.Id')" class="form-check-input" type="checkbox" checked>
+                        }
+                        else
+                        {
+                            <input onchange="ChangeActivation('@owner.Id')" class="form-check-input" type="checkbox">
+                        }
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex gap-3 justify-content-center ">
+                        <button class="sent-btn" data-bs-toggle="modal" data-bs-target="#sent-notification" onclick="PassId('@owner.Id')"> ارسال الاشعار</button>
+                        <button class="delete-btn" data-bs-toggle="modal" data-bs-target="#delete" onclick="PassId('@owner.Id')">حذف الحساب</button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!--info Modal -->
+<div class="modal fade" id="additional-info" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b" id="filterLabel">معلومات اضافية</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="secondary-btn w-100 py-3" data-bs-dismiss="modal"> اغلاق</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- send notification modal -->
+<div class="modal fade" id="sent-notification" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>ارسال الاشعار</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="adress" class="input-label" style="display:none;">عنوان</label>
+                <input type="text" class="site-input" id="adress" placeholder="ادخل العنوان" style="display:none;">
+
+                <label for="notify-content" class="input-label">نص الاشعار</label>
+                <textarea name="notify-content" id="notify-content" class="site-input mb-0" rows="6" placeholder="ادخل نص الاشعار"></textarea>
+            </div>
+            <div class="modal-footer">
+                <span hidden></span>
+                <button class="secondary-btn w-100 py-3" onclick="SendNotification(this)">ارسال</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--delete Modal -->
+<div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold font-b" id="filterLabel">حذف مستخدم</h5>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="font-xs">هل تريد حذف هذا المستخدم؟</p>
+            </div>
+            <div class="modal-footer">
+                <span hidden></span>
+                <button type="button" class="secondary-btn w-100 py-3" onclick="Remove(this)">تأكيد حذف المستخدم</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/script/usersactions.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".dt-search input").attr("placeholder", `بحث باسم المستخدم - رقم الجوال -  رقم الهوية -  المدينة - الحى`);
+        });
+
+
+    
+
+        function ShowAdditionalOwnerInfo(userId) {
+            $.ajax({
+                url: "/Users/AdditionalOwnerInfo",
+                type: "GET",
+                dataType: "json",
+                data: {
+                    userId: userId
+                },
+                success: function (result) {
+                    debugger;
+                    $('#additional-info .modal-body')
+                        .html(`
+                                                                <table class="table table-striped table-bordered nowrap" cellspacing="0" width="100%">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="text-align:center; color:#BE9030">
+                                                                                اسم البنك
+                                                                            </th>
+                                                                            <th style="text-align:center; color:#BE9030">
+                                                                                اسم صاحب الحساب
+                                                                            </th>
+                                                                            <th style="text-align:center; color:#BE9030">
+                                                                                    رقم الحساب
+                                                                            </th>
+                                                                            <th style="text-align:center; color:#BE9030">
+                                                                                    رقم الIBAN
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody style="text-align:center;">
+                                                                       <tr>
+                                                                            <td>
+                                                                                ${result.data.bankName}
+                                                                            </td>
+                                                                            <td>
+                                                                                ${result.data.bankAccountOwnerName}
+                                                                            </td>
+                                                                            <td>
+                                                                                ${result.data.bankAccountNo}
+                                                                            </td>
+                                                                            <td>
+                                                                                ${result.data.ibanNumber}
+                                                                            </td>
+                                                                       </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                     `);
+                    $('#additional-info').modal('show');
+                },
+                failure: function (info) {
+
+                }
+            });
+        }
+
+    </script>
+}

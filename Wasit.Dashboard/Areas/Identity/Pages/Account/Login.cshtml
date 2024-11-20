@@ -1,0 +1,42 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "تسجيل دخول";
+    Layout = "_Layout2";
+}
+
+<main class="login-page ">
+    <div class="login-container">
+        <div class="login-section">
+            <h5 class="title text-center">@ViewData["Title"]</h5>
+            <p class="disc text-center mb-5">برجاء ادخل البيانات التالية لتتمكن من تسجيل الدخول</p>
+
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <label asp-for="Input.Email" class="input-label">البريد الالكتروني</label>
+                <div class="input-box">
+                    <input type="email" asp-for="Input.Email" class="site-input" placeholder="البريد الالكتروني">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <label asp-for="Input.Password" class="input-label">كلمة المرور</label>
+                <div class="w-100 input-box mb-5">
+                    <input type="password" asp-for="Input.Password" class="site-input" placeholder="كلمة المرور ">
+                    <i class="fa-solid fa-lock"></i>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="secondary-btn w-100 py-3">تسجيل الدخول</button>
+            </form>
+
+        </div>
+    </div>
+    <img src="~/imgs/background shadow.png" alt="" class="bg-shadow">
+</main>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
